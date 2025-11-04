@@ -1,0 +1,118 @@
+# Core Web Framework
+fastapi>=0.121.0,<0.122.0
+uvicorn>=0.38.0,<0.39.0
+
+# Database and Vector Storage
+qdrant-client>=1.15.1,<1.16.0
+chromadb>=1.3.0,<1.4.0
+
+# Machine Learning and NLP
+sentence-transformers>=5.1.2,<5.2.0
+transformers>=4.57.1,<4.58.0
+torch>=2.9.0,<2.10.0
+numpy>=2.3.4,<2.4.0
+
+# Local LLM Support
+gpt4all>=2.8.2,<2.9.0
+
+# Web Scraping and Parsing
+playwright>=1.55.0,<1.56.0
+beautifulsoup4>=4.14.2,<4.15.0
+lxml>=6.0.2,<6.1.0
+
+# PDF Processing
+pdfplumber>=0.11.4,<0.12.0
+pypdf>=5.1.0,<5.2.0
+
+# Data Processing and Utilities
+pandas>=2.3.3,<2.4.0
+
+# Frontend Interface
+gradio>=5.49.1,<5.50.0
+
+# Configuration and Environment (Adjusted versions to resolve conflicts)
+pydantic>=2.0,<2.12
+
+# Authentication and Security
+cryptography>=46.0.3,<46.1.0
+
+# Utilities and Helpers
+rich>=14.2.0,<14.3.0
+python-multipart>=0.0.20,<0.0.21
+
+# Core Python Dependencies
+requests>=2.32.5,<2.33.0
+Jinja2>=3.1.6,<3.2.0
+PyYAML>=6.0.3,<6.1.0
+
+# Additional Dependencies
+annotated-doc>=0.0.3,<0.0.4
+audioop-lts>=0.2.2,<0.3.0
+Automat>=25.4.16,<25.5.0
+backoff>=2.2.1,<2.3.0
+Brotli>=1.1.0,<1.2.0
+cachetools>=6.2.1,<6.3.0
+cffi>=2.0.0,<2.1.0
+constantly>=23.10.4,<23.11.0
+cssselect>=1.3.0,<1.4.0
+defusedxml>=0.7.1,<0.8.0
+distro>=1.9.0,<1.10.0
+durationpy>=0.10,<0.11
+et_xmlfile>=2.0.0,<2.1.0
+ffmpy>=0.6.4,<0.7.0
+flatbuffers>=25.9.23,<25.9.24
+googleapis-common-protos>=1.71.0,<1.72.0
+greenlet>=3.2.4,<3.3.0
+groovy>=0.1.2,<0.2.0
+grpcio>=1.76.0,<1.77.0
+h2>=4.3.0,<4.4.0
+hpack>=4.1.0,<4.2.0
+httptools>=0.7.1,<0.8.0
+humanfriendly>=10.0,<10.1
+hyperframe>=6.1.0,<6.2.0
+hyperlink>=21.0.0,<21.1.0
+incremental>=24.7.2,<24.8.0
+itemadapter>=0.12.2,<0.13.0
+itemloaders>=1.3.2,<1.4.0
+jmespath>=1.0.1,<1.1.0
+markdown-it-py>=4.0.0,<4.1.0
+mdurl>=0.1.2,<0.2.0
+mmh3>=5.2.0,<5.3.0
+mpmath>=1.3.0,<1.4.0
+outcome>=1.3.0,<1.4.0
+pillow>=11.3.0,<11.4.0
+portalocker>=3.2.0,<3.3.0
+posthog>=5.4.0,<5.5.0
+Protego>=0.5.0,<0.6.0
+protobuf>=6.33.0,<6.34.0
+pyasn1>=0.6.1,<0.7.0
+pyasn1_modules>=0.4.2,<0.5.0
+pybase64>=1.4.2,<1.5.0
+pycparser>=2.23,<2.24
+PyDispatcher>=2.0.7,<2.1.0
+pydub>=0.25.1,<0.26.0
+pyee>=13.0.0,<13.1.0
+Pygments>=2.19.2,<2.20.0
+PyPika>=0.48.9,<0.49.0
+pyproject_hooks>=1.2.0,<1.3.0
+pyreadline3>=3.5.4,<3.6.0
+PySocks>=1.7.1,<1.8.0
+shellingham>=1.5.4,<1.6.0
+sortedcontainers>=2.4.0,<2.5.0
+soupsieve>=2.8,<2.9
+sympy>=1.14.0,<1.15.0
+threadpoolctl>=3.6.0,<3.7.0
+tldextract>=5.3.0,<5.4.0
+tomlkit>=0.13.3,<0.14.0
+trio>=0.32.0,<0.33.0
+trio-websocket>=0.12.2,<0.13.0
+Twisted>=25.5.0,<25.6.0
+typer>=0.20.0,<0.21.0
+typing-inspection>=0.4.2,<0.5.0
+tzdata>=2025.2,<2025.3
+w3lib>=2.3.1,<2.4.0
+watchfiles>=1.1.1,<1.2.0
+websocket-client>=1.9.0,<1.10.0
+websockets>=15.0.1,<15.1.0
+wsproto>=1.2.0,<1.3.0
+zope.interface>=8.0.1,<8.1.0

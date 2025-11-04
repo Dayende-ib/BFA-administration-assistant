@@ -1,0 +1,48 @@
+# Docker Compose pour le projet BFA-administration-assistant
+# - build : utilise le Dockerfile à la racine
+# - monte le dossier des modèles local `./src/models` dans `/app/src/models` (recommandé)
+# - expose le port 8000
+
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: bfa-admin-assistant:latest
+    ports:
+      - "${PORT:-8000}:8000"
+    env_file:
+      - .env
+    environment:
+      - QDRANT_HOST=qdrant  # Override pour Docker Compose
+    volumes:
+      # Montez vos modèles GGUF ici (ne pas inclure dans l'image)
+      - ./src/models:/app/src/models:rw
+      # Monte les données en lecture seule si besoin
+      - ./data:/app/data:rw
+      # Persistance de Qdrant
+      - qdrant_storage:/qdrant/storage
+    restart: unless-stopped
+    depends_on:
+      - qdrant
+    command: >
+      sh -c "
+        # Ré-indexation au démarrage
+        python src/index_corpus.py &&
+        # Démarrage de l'API
+        uvicorn src.api.main:app --host 0.0.0.0 --port 8000
+      "
+
+  qdrant:
+    image: qdrant/qdrant:latest
+    ports:
+      - "6333:6333"
+      - "6334:6334"
+    volumes:
+      - qdrant_storage:/qdrant/storage
+    restart: unless-stopped
+    environment:
+      - QDRANT__SERVICE__GRPC_PORT=6334
+
+volumes:
+  qdrant_storage:
