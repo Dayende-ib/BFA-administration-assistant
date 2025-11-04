@@ -103,14 +103,16 @@ class VectorStore:
             query_vector=query_embedding,
             limit=top_k,
             query_filter=search_filter,
-            with_vectors=False,
-            with_payload={"include": ["titre", "description", "url", "source", "Espace", "Thème"]},
+            with_vectors=False, # We don't need the vectors in the search result
+            with_payload=True, # Return the full payload
             search_params={"hnsw_ef": 128}
         )
         return [hit.payload for hit in hits]
 
     def ping(self) -> bool:
         try:
+            if self.client is None:
+                return False
             # simple call to verify connectivity
             _ = self.client.get_collections()
             return True

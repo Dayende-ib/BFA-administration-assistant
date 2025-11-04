@@ -31,14 +31,17 @@ def index_corpus():
     # Sauter la réindexation si la collection contient déjà des points sauf si FORCE_REINDEX=1
     force = os.environ.get("FORCE_REINDEX", "0") == "1"
     try:
-        # Si la collection existe et contient des points, sauter
-        info = vector_store.client.get_collection(vector_store.collection_name)
-        count = vector_store.client.count(vector_store.collection_name, exact=True).count
-        if (count or 0) > 0 and not force:
-            print(f"Collection '{vector_store.collection_name}' contient déjà {count} points. Saut de l'indexation (FORCE_REINDEX=1 pour forcer).")
-            return
+        if vector_store.client: # Vérifier si le client Qdrant est initialisé
+            # Si la collection existe et contient des points, sauter
+            info = vector_store.client.get_collection(vector_store.collection_name)
+            count = vector_store.client.count(vector_store.collection_name, exact=True).count
+            if (count or 0) > 0 and not force:
+                print(f"Collection '{vector_store.collection_name}' contient déjà {count} points. Saut de l'indexation (FORCE_REINDEX=1 pour forcer).")
+                return
+        else:
+            print("Qdrant client non initialisé, impossible de vérifier l'existence de la collection.")
     except Exception:
-        # Si la collection n'existe pas encore, nous la créerons ci-dessous
+        # Si la collection n'existe pas encore ou si le client n'est pas initialisé, nous la créerons ci-dessous
         pass
 
     # Créer la collection avec la taille de vecteur correcte pour multilingual-e5-base (768 dimensions)
