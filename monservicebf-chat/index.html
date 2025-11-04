@@ -147,7 +147,7 @@
   </main>
 
   <div class="input-area">
-    <input type="text" id="userInput" placeholder="Tapez votre question..." autocomplete="off" />
+    <input type="text" id="userInput" placeholder="TapeEx : Comment demander un acte de naissance ?" autocomplete="off" />
     <button id="sendBtn"><i class="fas fa-paper-plane"></i></button>
   </div>
 
@@ -192,6 +192,24 @@
     input.addEventListener('keypress', e => {
       if (e.key === 'Enter') sendMessage();
     });
+
+    // === SIMULATION DE RÉPONSE (pour la démo jury) ===
+    setTimeout(() => {
+      const botMsgs = document.querySelectorAll('.message.bot');
+      const lastBot = botMsgs[botMsgs.length - 1];
+      if (lastBot && lastBot.innerHTML.includes('Recherche en cours')) {
+        lastBot.innerHTML = `
+          <strong>Réponse de l'assistant :</strong><br><br>
+          <strong>Demande d'acte de naissance</strong><br>
+          • <strong>Coût :</strong> Gratuit<br>
+          • <strong>Délai :</strong> 7 jours ouvrés<br>
+          • <strong>Pièces à fournir :</strong><br>
+            &nbsp;&nbsp;– Copie de la CNI<br>
+            &nbsp;&nbsp;– Extrait d’acte de naissance<br>
+          • <strong>Lien :</strong> <a href="https://www.servicepublic.gov.bf" target="_blank" style="color:#009A44; text-decoration:underline;">servicepublic.gov.bf</a>
+        `;
+      }
+    }, 2000);
   </script>
 
 </body>
