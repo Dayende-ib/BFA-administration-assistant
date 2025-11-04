@@ -24,3 +24,7 @@ https://www.servicepublic.gov.bf/eservice/demande-etats-civil | 2025-11-02 | Dom
 https://servicepublic.gov.bf/fiches/sante-humaine-demande-dhomologation-des-produits-de-sante | 2025-11-02 | Domaine public (site gouvernemental) | ServicePublic.gov.bf
 https://www.servicepublic.gov.bf/eservice/autorisation-exercice-pharmacie-privee | 2025-11-02 | Domaine public (site gouvernemental) | ServicePublic.gov.bf
 https://www.servicepublic.gov.bf/eservice/inscription-ordre-medecins | 2025-11-02 | Domaine public (site gouvernemental) | ServicePublic.gov.bf
+https://servicepublic.gov.bf/fiches/impots-et-taxes-impot-sur-les-societes-is
+https://servicepublic.gov.bf/fiches/impots-et-taxes-taxe-sur-la-valeur-ajoutee-tva
+https://www.sante.gov.bf (Service de Santé des Armées)
+https://www.fonction-publique.gov.bf (Inspection du travail)

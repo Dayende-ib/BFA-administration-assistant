@@ -310,5 +310,113 @@
     "Délai de traitement": "45 jours",
     "Informations complémentaires": "Obligatoire pour tout exercice libéral ou salarié. Radiation en cas de faute déontologique",
     "Adresse web": "https://www.servicepublic.gov.bf/eservice/inscription-ordre-medecins"
+  },
+  {
+    "Titre": "Demande d'un certificat de nationalité",
+    "Espace": "Particuliers",
+    "Thème": "Justice/Droits humains/Civisme",
+    "Rubrique": "Promotion de la justice",
+    "Description": "Le certificat de nationalité est un document administratif délivré par le Président du Tribunal de Grande Instance qui confère à une personne la qualité de burkinabè. Tous les tribunaux de grande instance du Burkina Faso ont compétence pour l'en délivrer. Une fois délivré, le certificat de nationalité burkinabè n'est soumis à aucun délai de validité.",
+    "Coût(s)": "700 FCFA",
+    "Conditions d’accès": "Etre burkinabé",
+    "Délai de traitement": "Non mentionné",
+    "Informations complémentaires": "Non mentionné",
+    "Adresse web": "https://servicepublic.gov.bf/fiches/promotion-de-la-justice-demande-dun-certificat-de-nationalite"
+  },
+  {
+    "Titre": "Demande d'une décision de justice",
+    "Espace": "Particuliers",
+    "Thème": "Justice/Droits humains/Civisme",
+    "Rubrique": "Promotion de la justice",
+    "Description": "Acte qui traduit la décision d'un tribunal sur un jugement",
+    "Coût(s)": "500 F CFA la feuille + un timbre de 200 F CFA",
+    "Conditions d’accès": "Se rendre au tribunal dans lequel le jugement a été rendu",
+    "Délai de traitement": "Non mentionné",
+    "Informations complémentaires": "Non mentionné",
+    "Adresse web": "https://servicepublic.gov.bf/fiches/promotion-de-la-justice-demande-dune-decision-de-justice"
+  },
+  {
+    "Titre": "Impôt sur les sociétés (IS)",
+    "Espace": "Entreprises",
+    "Thème": "Economie/Finances",
+    "Rubrique": "Impôts et taxes",
+    "Description": "Impôt établi au profit du budget de l'Etat sur l'ensemble des bénéfices ou revenus des sociétés, des autres personnes morales.",
+    "Coût(s)": "Le taux de l'IS est fixé à 27,5%. Toute fraction du bénéfice imposable inférieure à mille (1 000) francs CFA est négligée.",
+    "Conditions d’accès": "L'IS est dû à raison de l'ensemble des produits, revenus et bénéfices réalisés par les sociétés exploitées au BF, sous réserve des dispositions des conventions internationales relatives aux doubles impositions.",
+    "Délai de traitement": "Les sociétés sont tenues de déclarer, au plus tard le 30 avril de chaque année, le montant de leur résultat imposable afférent à l'exercice comptable clos au 31 décembre de l'année précédente.",
+    "Informations complémentaires": "Exonérations : sociétés coopératives, établissements publics, associations sans but lucratif, etc.",
+    "Adresse web": "https://servicepublic.gov.bf/fiches/impots-et-taxes-impot-sur-les-societes-is"
+  },
+  {
+    "Titre": "Taxe sur la Valeur Ajoutée (TVA)",
+    "Espace": "Entreprises",
+    "Thème": "Economie/Finances",
+    "Rubrique": "Impôts et taxes",
+    "Description": "La TVA est un impôt dû par les personnes physiques ou morales qui, habituellement ou occasionnellement font des affaires au BF en accomplissant des actes relevant d'une activité autre que salarié.",
+    "Coût(s)": "La TVA connaît actuellement un taux unique de 18%.",
+    "Conditions d’accès": "Sont assujetties à la TVA, toutes personnes physiques ou morales faisant des affaires au Burkina Faso.",
+    "Délai de traitement": "Non spécifié dans le contenu",
+    "Informations complémentaires": "Exonérations : exportations, agriculture, santé, éducation, etc.",
+    "Adresse web": "https://servicepublic.gov.bf/fiches/impots-et-taxes-taxe-sur-la-valeur-ajoutee-tva"
+  },
+  {
+    "Titre": "Demande de permis de communiqué permanent",
+    "Espace": "Particuliers",
+    "Thème": "Justice/Droits humains/Civisme",
+    "Rubrique": "Promotion des droits humains",
+    "Description": "Acte autorisant une personne à communiquer son proche parent détenu pendant un(01) mois",
+    "Coût(s)": "Gratuit",
+    "Conditions d’accès": "Avoir un proche parent condamné",
+    "Délai de traitement": "Non spécifié dans le contenu",
+    "Informations complémentaires": "Le permis expire après une durée de un (01) mois",
+    "Adresse web": "https://servicepublic.gov.bf/fiches/promotion-des-droits-humains-demande-de-permis-de-communique-permanent"
+  },
+  {
+    "Titre": "Sensibilisation sur sécurité routière",
+    "Espace": "Particuliers",
+    "Thème": "Transport",
+    "Rubrique": "Sécurité routière",
+    "Description": "Animer des séances de sensibilisation sur les bonnes pratiques en matière de sécurité routière.",
+    "Coût(s)": "Gratuit pour élèves et étudiants; Gratuit pour les associations; Gratuit pour le personnel administratif",
+    "Conditions d’accès": "Lettres de demande, Disponibilité de l’équipe d’animation, Paiement de frais locatif, notamment pour le camion podium",
+    "Délai de traitement": "Non spécifié",
+    "Informations complémentaires": "Lettre de demande pour les étudiants; Paiement de frais locatif pour les organisations socioprofessionnelles",
+    "Adresse web": "https://servicepublic.gov.bf/fiches/transport-sensibilisation-sur-securite-routiere"
+  },
+  {
+    "Titre": "Mise à disposition des fiches de bornes géodésiques ou de nivellement",
+    "Espace": "Particuliers",
+    "Thème": "Information géographique",
+    "Rubrique": "Géodésie",
+    "Description": "Consiste à mettre à disposition des usagers les fiches signalétiques des différentes bornes implantées sur l'ensemble du territoire",
+    "Coût(s)": "2500 fcfa/fiche",
+    "Conditions d’accès": "Bon de commande ou paiement au comptant",
+    "Délai de traitement": "Non mentionné",
+    "Informations complémentaires": "Support papier",
+    "Adresse web": "https://servicepublic.gov.bf/fiches/Information%20g%C3%A9ographique-mise-a-disposition-des-fiches-de-bornes-geodesiques-ou-de-nivellement"
+  },
+  {
+    "Titre": "Accès aux services de santé du Service de Santé des Armées",
+    "Espace": "Particuliers",
+    "Thème": "Santé",
+    "Rubrique": "Santé humaine",
+    "Description": "Le Service de Santé des Armées offre des soins spécialisés (médecine interne, chirurgie, ophtalmologie, cardiologie, etc.) aux militaires, paramilitaires, familles et au grand public.",
+    "Coût(s)": "Gratuit ou payant selon statut",
+    "Conditions d’accès": "Ouvert au grand public. Contact : 25 41 90 93",
+    "Délai de traitement": "Selon disponibilité",
+    "Informations complémentaires": "Clinique Générale Lamizana à Ouagadougou + infirmeries dans toutes les garnisons du pays.",
+    "Adresse web": "https://www.sante.gov.bf"
+  },
+  {
+    "Titre": "Autorisation de licenciement d'un travailleur malade",
+    "Espace": "Entreprises",
+    "Thème": "Travail/Protection sociale",
+    "Rubrique": "Inspection du travail",
+    "Description": "Décision par laquelle l’inspecteur du travail autorise ou refuse le licenciement d'un travailleur malade",
+    "Coût(s)": "Gratuit",
+    "Conditions d’accès": "Correspondance motivée avec informations sur le reclassement possible",
+    "Délai de traitement": "Non spécifié",
+    "Informations complémentaires": "Enquête contradictoire obligatoire. Le travailleur est informé de la décision.",
+    "Adresse web": "https://www.fonction-publique.gov.bf"
   }
 ]

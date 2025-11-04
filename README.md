@@ -35,15 +35,18 @@ Ce projet a été développé pour le Hackathon SN 2025 avec pour objectif de cr
 │   ├── corpus.json          # Documents administratifs (500+)
 │   └── sources.txt          # Sources des documents
 ├── src/
+│   ├── api/
+│   │   └── main.py          # API FastAPI
 │   ├── rag/
 │   │   ├── embedder.py      # Génération d'embeddings
 │   │   ├── vector_store.py  # Interface avec Qdrant
 │   │   ├── retriever.py     # Récupération de documents
 │   │   └── generator.py     # Génération de réponses
-│   ├── collect.py           # Scraping des sites gouvernementaux
+│   ├── utils/
+│   │   └── settings.py      # Configuration de l'application
 │   └── index_corpus.py      # Indexation des documents
-├── evaluation/
-│   └── eval.py              # Script d'évaluation
+├── tests/
+│   └── test_api.py          # Tests unitaires de l'API
 ├── main.py                  # Point d'entrée principal
 ├── Dockerfile               # Configuration Docker
 ├── docker-compose.yml       # Orchestration Docker
@@ -125,16 +128,13 @@ curl -X POST http://localhost:8000/generate \
 
 ## 📈 Collecte de données
 
-Le script [collect.py](file:///e:/BFA-administration-assistant/src/collect.py) scrape les sites suivants pour collecter plus de 500 documents:
+La collecte de données a été réalisée pour constituer la base de connaissances de plus de 500 documents à partir des sites suivants:
 
 - https://www.servicepublic.gov.bf/
 - https://www.gouvernement.gov.bf/
 - https://legiburkina.bf/ (PDFs)
 
-```bash
-# Exécuter la collecte
-python main.py collect
-```
+Les données collectées sont stockées dans le fichier [data/corpus.json](file:///e:/BFA-administration-assistant/data/corpus.json).
 
 ## 🗃️ Indexation
 
@@ -145,13 +145,13 @@ L'indexation des documents dans Qdrant:
 python main.py index
 ```
 
-## 🧪 Évaluation
+## 🧪 Tests
 
-Exécuter l'évaluation du système:
+Exécuter les tests unitaires du système:
 
 ```bash
-# Lancer l'évaluation
-python main.py eval
+# Lancer les tests
+python -m pytest tests/
 ```
 
 ## 🎥 Démo
