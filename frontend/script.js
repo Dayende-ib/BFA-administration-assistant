@@ -2,40 +2,145 @@ const chat = document.getElementById('chat');
 const input = document.getElementById('userInput');
 const sendBtn = document.getElementById('sendBtn');
 
-const sendMessage = (question) => {
+// Store conversation history
+let conversationHistory = [];
+
+// Apply saved theme on page load
+document.addEventListener('DOMContentLoaded', () => {
+  const savedTheme = localStorage.getItem('theme') || 'light';
+  if (savedTheme === 'dark') {
+    document.body.classList.add('dark-mode');
+  }
+});
+
+const sendMessage = async (question) => {
   if (!question) question = input.value.trim();
   if (!question) return;
 
-  const userMsg = document.createElement('div');
-  userMsg.className = 'message user';
-  userMsg.textContent = question;
-  chat.appendChild(userMsg);
+  // Add user message to chat with avatar
+  const userMessage = document.createElement('div');
+  userMessage.className = 'message user';
+  userMessage.innerHTML = `
+    <div class="message-content">
+      <div class="message-text">${question}</div>
+    </div>
+  `;
+  chat.appendChild(userMessage);
 
   input.value = '';
   chat.scrollTop = chat.scrollHeight;
 
-  const botMsg = document.createElement('div');
-  botMsg.className = 'message bot';
-  botMsg.innerHTML = `<i class="fas fa-spinner fa-spin"></i> Recherche en cours...`;
-  chat.appendChild(botMsg);
+  // Add loading indicator with avatar
+  const botMessage = document.createElement('div');
+  botMessage.className = 'message bot';
+  botMessage.innerHTML = `
+    <div class="avatar">
+      <i class="fas fa-robot"></i>
+    </div>
+    <div class="message-content">
+      <div class="typing-indicator">
+        <span></span>
+        <span></span>
+        <span></span>
+      </div>
+    </div>
+  `;
+  chat.appendChild(botMessage);
   chat.scrollTop = chat.scrollHeight;
 
-  setTimeout(() => {
-    let response = "";
-    if (question.includes("naissance") && !question.includes("déclarer")) {
-      response = `<strong>Acte de naissance</strong><br>• Gratuit<br>• 7 jours<br>• CNI + extrait<br><a href="#" style="color:#009A44;">Lien</a>`;
-    } else if (question.includes("casier")) {
-      response = `<strong>Casier judiciaire</strong><br>• 500 FCFA<br>• 5 jours<br>• CNI<br><a href="#" style="color:#009A44;">Lien</a>`;
-    } else if (question.includes("résidence")) {
-      response = `<strong>Certificat de résidence</strong><br>• 200 FCFA<br>• 48h<br>• CNI + preuve<br><a href="#" style="color:#009A44;">Lien</a>`;
-    } else if (question.includes("déclarer")) {
-      response = `<strong>Déclaration naissance</strong><br>• Gratuit<br>• 60 jours<br>• Certificat médical<br><a href="#" style="color:#009A44;">Lien</a>`;
-    } else {
-      response = `Aucune info pour : "<strong>${question}</strong>"`;
+  try {
+    // Call the backend API
+    const response = await fetch('/generate', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        question: question,
+        top_k: 5
+      })
+    });
+
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
     }
-    botMsg.innerHTML = response;
-    chat.scrollTop = chat.scrollHeight;
-  }, 1800);
+
+    const data = await response.json();
+    
+    // Format the response with answer and sources
+    let responseHTML = `
+      <div class="avatar">
+        <i class="fas fa-robot"></i>
+      </div>
+      <div class="message-content">
+        <div class="message-text">${data.answer}</div>
+    `;
+    
+    if (data.sources && data.sources.length > 0) {
+      responseHTML += `
+        <div class="sources">
+          <strong>Sources:</strong>
+          ${data.sources.map(source => 
+            `<div style="margin: 5px 0;">• <a href="${source.url}" target="_blank">${source.titre}</a></div>`
+          ).join('')}
+        </div>
+      `;
+    }
+    
+    // Add feedback buttons
+    responseHTML += `
+        <div class="feedback">
+          <span>Cette réponse vous a-t-elle aidé ?</span>
+          <button class="feedback-btn" onclick="sendFeedback('positive')" title="Utile">👍</button>
+          <button class="feedback-btn" onclick="sendFeedback('negative')" title="Pas utile">👎</button>
+        </div>
+      </div>
+    `;
+    
+    botMessage.innerHTML = responseHTML;
+    
+    // Add to conversation history
+    conversationHistory.push({
+      question: question,
+      answer: data.answer,
+      timestamp: new Date()
+    });
+  } catch (error) {
+    console.error('Error:', error);
+    botMessage.innerHTML = `
+      <div class="avatar">
+        <i class="fas fa-robot"></i>
+      </div>
+      <div class="message-content">
+        <div class="message-text">Désolé, une erreur s'est produite lors de la récupération de la réponse. Veuillez réessayer.</div>
+      </div>
+    `;
+  }
+  
+  chat.scrollTop = chat.scrollHeight;
+};
+
+// Function to send feedback
+const sendFeedback = (feedback) => {
+  console.log('Feedback received:', feedback);
+  // In a real implementation, you would send this to your backend
+  // Show a confirmation message
+  const confirmation = document.createElement('div');
+  confirmation.className = 'message bot';
+  confirmation.innerHTML = `
+    <div class="avatar">
+      <i class="fas fa-robot"></i>
+    </div>
+    <div class="message-content">
+      <div class="message-text">
+        ${feedback === 'positive' 
+          ? 'Merci pour votre feedback positif !' 
+          : 'Merci pour votre feedback. Nous allons essayer de nous améliorer.'}
+      </div>
+    </div>
+  `;
+  chat.appendChild(confirmation);
+  chat.scrollTop = chat.scrollHeight;
 };
 
 const askQuestion = (q) => {
