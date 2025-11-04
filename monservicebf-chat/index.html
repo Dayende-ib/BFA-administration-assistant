@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>MonServiceBF - Assistant IA</title>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500;600;700&family=Open+Sans:wght@300;400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"/>
+  <link rel="stylesheet" href="style.css"/>
+</head>
+<body>
+
+  <header>
+    <div class="logo">
+      <i class="fas fa-star"></i> MonService<span>BF</span>
+    </div>
+    <div class="flag-bf"></div>
+  </header>
+
+  <div class="chat-container" id="chat">
+    <div class="message bot">
+     Bonjour ! Je suis l’assistant des démarches et des procédures administratives du <strong>Burkina Faso</strong>.
+      Cliquez sur une suggestion ou tapez votre question.
+    </div>
+
+    <div class="suggestions">
+      <div class="suggestion-card" onclick="askQuestion('Comment demander un acte de naissance ?')">
+        <i class="fas fa-file-alt"></i>
+        Acte de naissance
+      </div>
+      <div class="suggestion-card blue" onclick="askQuestion('Combien coûte le casier judiciaire ?')">
+        <i class="fas fa-balance-scale"></i>
+        Casier judiciaire
+      </div>
+      <div class="suggestion-card red" onclick="askQuestion('Comment obtenir un certificat de résidence ?')">
+        <i class="fas fa-id-card"></i>
+        Résidence
+      </div>
+      <div class="suggestion-card yellow" onclick="askQuestion('Comment déclarer une naissance ?')">
+        <i class="fas fa-file-medical"></i>
+        Déclaration naissance
+      </div>
+    </div>
+  </div>
+
+  <div class="input-area">
+    <input type="text" id="userInput" placeholder="Posez votre question..." autocomplete="off" />
+    <button id="sendBtn"><i class="fas fa-paper-plane"></i></button>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
