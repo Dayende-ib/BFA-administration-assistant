@@ -10,10 +10,12 @@ class Retriever:
 
     def retrieve(self, question, top_k=5, espace_filter=None, theme_filter=None):
         q_emb = self.embedder.embed([question])[0]
-        # initial vector search
-        results = self.vector_store.search(q_emb, max(top_k * 4, 10), espace_filter, theme_filter)
-        # re-rank by cosine similarity using embedder on descriptions
-        texts = [r.get("description", "") for r in results]
+        # initial vector search (limiter le pré-filtrage)
+        prefetch = max(top_k * 2, 10)
+        results = self.vector_store.search(q_emb, prefetch, espace_filter, theme_filter)
+        # ne re-ranker qu'un petit sous-ensemble
+        candidates = results[:20]
+        texts = [r.get("description", "") for r in candidates]
         doc_embs = self.embedder.embed(texts) if texts else []
 
         def cosine(a, b):
@@ -23,7 +25,7 @@ class Retriever:
             return s  # embeddings are normalized -> dot = cosine
 
         scored: List[Dict] = []
-        for doc, emb in zip(results, doc_embs):
+        for doc, emb in zip(candidates, doc_embs):
             score = cosine(q_emb, emb)
             doc = dict(doc)
             doc["_score"] = score

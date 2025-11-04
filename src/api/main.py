@@ -72,6 +72,11 @@ def startup_event():
     try:
         if Retriever is not None:
             retriever = Retriever()
+            try:
+                # warmup embeddings (réduit la latence de la 1ère requête)
+                retriever.embedder.embed(["warmup"])
+            except Exception:
+                pass
     except Exception as e:
         print("Warning: erreur initialisation Retriever:", e)
 

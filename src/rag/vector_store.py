@@ -102,7 +102,10 @@ class VectorStore:
             collection_name=self.collection_name,
             query_vector=query_embedding,
             limit=top_k,
-            query_filter=search_filter
+            query_filter=search_filter,
+            with_vectors=False,
+            with_payload={"include": ["titre", "description", "url", "source", "Espace", "Thème"]},
+            search_params={"hnsw_ef": 128}
         )
         return [hit.payload for hit in hits]
 
