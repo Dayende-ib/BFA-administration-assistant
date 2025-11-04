@@ -4,7 +4,7 @@ from functools import lru_cache
 
 class Embedder:
     def __init__(self):
-        # Use multilingual-e5-base for better French performance
+        # Utiliser multilingual-e5-base pour de meilleures performances en français
         self.model = SentenceTransformer(
             "intfloat/multilingual-e5-base",
             device="cpu"
@@ -13,7 +13,7 @@ class Embedder:
         self._batch_size = 32
 
     def embed(self, texts):
-        # Simple in-memory cache per texte -> embedding
+        # Cache mémoire simple par texte -> embedding
         missing = [t for t in texts if t not in self._cache]
         if missing:
             embeddings = self.model.encode(

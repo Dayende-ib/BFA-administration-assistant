@@ -4,22 +4,22 @@ from typing import List, Dict, Any
 
 class Generator:
     def __init__(self, model_path="src/models/Llama-3.2-3B-Instruct-Q4_0.gguf"):
-        # Convert to absolute path to ensure GPT4All can find the file
+        # Convertir en chemin absolu pour garantir que GPT4All peut trouver le fichier
         if not os.path.isabs(model_path):
             model_path = os.path.join(os.getcwd(), model_path)
         
-        # Store the model path
+        # Stocker le chemin du modèle
         self.model_path = model_path
         
-        # Check if model file exists before trying to load it
+        # Vérifier si le fichier modèle existe avant d'essayer de le charger
         if not os.path.exists(model_path):
             raise FileNotFoundError(f"Model file not found at {model_path}. Please mount a GGUF model file in /app/src/models.")
         
-        # Load the model only if it exists, and prevent automatic download
+        # Charger le modèle uniquement s'il existe, et empêcher le téléchargement automatique
         self.model = GPT4All(model_path, device='cpu', allow_download=False, verbose=False)
 
     def _has_cuda(self):
-        """Check if CUDA is available."""
+        """Vérifier si CUDA est disponible."""
         try:
             import torch
             return torch.cuda.is_available()
@@ -27,7 +27,7 @@ class Generator:
             return False
 
     def _format_answer(self, text: str) -> str:
-        """Normalize whitespace and ensure sentence-ending punctuation."""
+        """Normaliser les espaces et garantir la ponctuation de fin de phrase."""
         cleaned = " ".join(text.strip().split())
         if not cleaned:
             return cleaned
@@ -37,46 +37,46 @@ class Generator:
 
     def generate(self, question: str, context_docs: List[Dict[str, Any]]) -> str:
         """
-        Generate a response to a question using the provided context documents.
+        Générer une réponse à une question en utilisant les documents contextuels fournis.
         
-        This method uses a Retrieval-Augmented Generation (RAG) approach where:
-        1. Context documents are formatted and provided to the LLM
-        2. A structured prompt guides the LLM to produce a coherent, cited response
-        3. The LLM generates a response based on both its knowledge and the provided context
+        Cette méthode utilise une approche de génération augmentée par récupération (RAG) où :
+        1. Les documents contextuels sont formatés et fournis au LLM
+        2. Un prompt structuré guide le LLM pour produire une réponse cohérente et citée
+        3. Le LLM génère une réponse basée sur ses connaissances et le contexte fourni
         
         Args:
-            question (str): The user's question to answer
-            context_docs (List[Dict[str, Any]]): List of relevant documents containing:
-                - 'titre': Document title
-                - 'description': Document content/description
-                - 'url': Source URL for citation
-                - Other metadata fields as available
+            question (str): La question de l'utilisateur à répondre
+            context_docs (List[Dict[str, Any]]): Liste des documents pertinents contenant :
+                - 'titre': Titre du document
+                - 'description': Contenu/description du document
+                - 'url': URL source pour citation
+                - Autres champs de métadonnées disponibles
                 
         Returns:
-            str: A formatted answer with citations to the source documents
+            str: Une réponse formatée avec des citations aux documents sources
             
-        Example:
+        Exemple:
             >>> generator = Generator()
             >>> context = [{'titre': 'Passeport', 'description': 'Document de voyage', 'url': 'https://example.com'}]
             >>> response = generator.generate("Comment obtenir un passeport?", context)
         """
-        # Check if model was properly loaded
+        # Vérifier si le modèle a été correctement chargé
         if not hasattr(self, 'model') or self.model is None:
             return "Modèle indisponible. Montez un modèle GGUF dans /app/src/models."
             
         def _truncate(text: str, max_len: int = 1024) -> str:
-            """Truncate text to maximum length while preserving word boundaries."""
+            """Tronquer le texte à la longueur maximale tout en préservant les limites des mots."""
             t = (text or "").strip()
             if len(t) <= max_len:
                 return t
-            # Try to truncate at last space within limit
+            # Essayer de tronquer au dernier espace dans la limite
             truncated = t[:max_len]
             last_space = truncated.rfind(' ')
             if last_space > 0:
                 return truncated[:last_space] + "..."
             return truncated[:max_len] + "..."
 
-        # Enhanced context formatting with better structure and metadata
+        # Formatage amélioré du contexte avec une meilleure structure et métadonnées
         context_parts = []
         for i, doc in enumerate(context_docs, 1):
             title = doc.get('titre', 'Document sans titre')
@@ -86,7 +86,7 @@ class Generator:
             theme = doc.get('Thème', '')
             espace = doc.get('Espace', '')
             
-            # Build context entry with all available metadata
+            # Construire l'entrée de contexte avec toutes les métadonnées disponibles
             context_entry = f"Document {i}:\n"
             context_entry += f"  Titre: {title}\n"
             if description:
@@ -101,10 +101,10 @@ class Generator:
                 
             context_parts.append(context_entry)
 
-        # Join all context parts
+        # Joindre toutes les parties du contexte
         context = "\n".join(context_parts)
 
-        # Enhanced prompt with clearer structure and instructions
+        # Prompt amélioré avec une structure et des instructions plus claires
         prompt = f"""Vous êtes un assistant administratif burkinabè expert en droit et procédures administratives du Burkina Faso.
 Votre rôle est de répondre aux questions des citoyens en vous basant sur les documents fournis.
 
@@ -124,12 +124,12 @@ Consignes pour votre réponse:
 
 Réponse:"""
 
-        # Generate response with tuned parameters for better quality
+        # Générer la réponse avec des paramètres ajustés pour une meilleure qualité
         response = self.model.generate(
             prompt,
             max_tokens=512,
-            temp=0.2,          # Low temperature for more deterministic responses
-            top_p=0.95,        # Nucleus sampling
-            repeat_penalty=1.1 # Slight penalty for repetition
+            temp=0.2,          # Température basse pour des réponses plus déterministes
+            top_p=0.95,        # Échantillonnage du noyau
+            repeat_penalty=1.1 # Légère pénalité pour la répétition
         )
         return self._format_answer(response)

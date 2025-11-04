@@ -6,7 +6,7 @@ import os
 import sys
 import glob
 
-# Add src directory to PYTHONPATH for rag.* imports to work
+# Ajouter le répertoire src au PYTHONPATH pour que les imports rag.* fonctionnent
 BASE_DIR = os.path.dirname(os.path.dirname(__file__))
 if BASE_DIR not in sys.path:
     sys.path.insert(0, BASE_DIR)
@@ -15,13 +15,13 @@ try:
     from rag.retriever import Retriever
     from rag.generator import Generator
 except Exception as e:
-    # Import errors will be logged on startup; API will still expose health endpoint
+    # Les erreurs d'import seront enregistrées au démarrage ; l'API exposera toujours le point de terminaison de santé
     Retriever = None
     Generator = None
     print("Warning: impossible d'importer les modules RAG:", e)
 
 try:
-    # index_corpus is a utility to (re)create the index from data/corpus.json
+    # index_corpus est un utilitaire pour (re)créer l'index à partir de data/corpus.json
     import index_corpus
 except Exception as e:
     index_corpus = None
@@ -30,13 +30,13 @@ except Exception as e:
 try:
     from utils.settings import settings
 except Exception:
-    # Fallback minimal settings
+    # Paramètres de secours minimaux
     class _Fallback:
         ALLOW_ORIGINS = ["*"]
         MODEL_DIR = os.path.join(os.path.dirname(os.path.dirname(__file__)), "models")
     settings = _Fallback()
 
-app = FastAPI(title="BFA Administration Assistant API")
+app = FastAPI(title="API de l'assistant administratif BFA")
 # CORS
 app.add_middleware(
     CORSMiddleware,
@@ -45,7 +45,7 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
-# variable to store the loaded model path (if any)
+# variable pour stocker le chemin du modèle chargé (le cas échéant)
 generator_model_path = None
 
 
@@ -68,31 +68,31 @@ def startup_event():
     generator = None
     generator_model_path = None
 
-    # Initialize the retriever if available
+    # Initialiser le récupérateur si disponible
     try:
         if Retriever is not None:
             retriever = Retriever()
             try:
-                # warmup embeddings (réduit la latence de la 1ère requête)
+                # préchauffage des embeddings (réduit la latence de la 1ère requête)
                 retriever.embedder.embed(["warmup"])
             except Exception:
                 pass
     except Exception as e:
         print("Warning: erreur initialisation Retriever:", e)
 
-    # Initialize the generator if available and if a model is mounted
+    # Initialiser le générateur si disponible et si un modèle est monté
     try:
         if Generator is not None:
             model_dir = getattr(settings, "MODEL_DIR", os.path.join(BASE_DIR, "models"))
-            # default filename used in src/rag/generator.py
+            # nom de fichier par défaut utilisé dans src/rag/generator.py
             default_name = "Llama-3.2-3B-Instruct-Q4_0.gguf"
-            # Prioritize the default file if it exists, otherwise search for any *.gguf
+            # Prioriser le fichier par défaut s'il existe, sinon rechercher tout *.gguf
             model_path_default = os.path.join(model_dir, default_name)
             model_path = None
             if os.path.exists(model_path_default):
                 model_path = model_path_default
             else:
-                # Search for other .gguf files in the directory
+                # Rechercher d'autres fichiers .gguf dans le répertoire
                 try:
                     candidates = glob.glob(os.path.join(model_dir, "*.gguf")) if os.path.isdir(model_dir) else []
                 except Exception:
@@ -103,7 +103,7 @@ def startup_event():
             if model_path and os.path.exists(model_path):
                 print(f"Info: chargement du modèle depuis {model_path}")
                 generator = Generator(model_path=model_path)
-                # keep the path for reporting
+                # conserver le chemin pour le rapport
                 generator_model_path = model_path
             else:
                 print(f"Info: aucun modèle .gguf trouvé dans {model_dir}. Le generator restera désactivé.")
@@ -117,7 +117,7 @@ def health():
 
 @app.get("/ready")
 def ready():
-    """Readiness probe: vérifie retriever, generator et présence du modèle."""
+    """Sonde de disponibilité : vérifie retriever, generator et présence du modèle."""
     status = {
         "retriever": bool(retriever),
         "generator": bool(generator),
@@ -134,7 +134,7 @@ async def generate(req: GenerateRequest):
     if retriever is None:
         raise HTTPException(status_code=503, detail="Retriever non initialisé")
 
-    # Retrieve contextual documents
+    # Récupérer les documents contextuels
     try:
         docs = retriever.retrieve(
             req.question, 
@@ -145,9 +145,9 @@ async def generate(req: GenerateRequest):
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Erreur retrieval: {e}")
 
-    # Generation
+    # Génération
     if generator is None:
-        # Return just the docs if no model
+        # Retourner juste les documents si aucun modèle
         return {"answer": "Modèle indisponible. Montez un modèle GGUF dans /app/src/models.", "sources": docs}
 
     try:
@@ -160,11 +160,11 @@ async def generate(req: GenerateRequest):
 
 @app.post("/reindex")
 def reindex(background_tasks: BackgroundTasks):
-    """Starts a corpus reindexing in the background.
+    """Démarre une réindexation du corpus en arrière-plan.
 
-    This operation calls `index_corpus.index_corpus()` which reads `data/corpus.json`,
-    computes embeddings and upserts to Qdrant. Launch in background to
-    avoid blocking the HTTP request.
+    Cette opération appelle `index_corpus.index_corpus()` qui lit `data/corpus.json`,
+    calcule les embeddings et les insère dans Qdrant. Lancer en arrière-plan pour
+    éviter de bloquer la requête HTTP.
     """
     if index_corpus is None:
         raise HTTPException(status_code=503, detail="Indexeur non disponible dans le conteneur")
@@ -178,12 +178,12 @@ def reindex(background_tasks: BackgroundTasks):
 
 @app.get("/model/status")
 def model_status():
-    """Returns the status of model-related components.
+    """Retourne l'état des composants liés au modèle.
 
-    - retriever: bool
-    - generator: bool
-    - model_path: path of loaded model (or None)
-    - indexer_available: bool (if index_corpus utility is importable)
+    - retriever : bool
+    - generator : bool
+    - model_path : chemin du modèle chargé (ou None)
+    - indexer_available : bool (si l'utilitaire index_corpus est importable)
     """
     status = {
         "retriever_initialized": bool(retriever),
