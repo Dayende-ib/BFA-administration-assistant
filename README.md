@@ -14,7 +14,6 @@ Ce projet a été développé pour le Hackathon SN 2025 avec pour objectif de cr
 - **RAG (Retrieval-Augmented Generation)** : Combinaison d'embeddings, base vectorielle et LLM
 - **100% local** : Fonctionne entièrement sur machine locale
 - **100% open source** : Tous les composants sont open source
-- **Interface simple** : API REST et interface web Gradio
 - **Multilingue** : Optimisé pour le français
 - **Filtrage avancé** : Recherche par espace (Particuliers/Entreprises) et thème
 
@@ -26,7 +25,6 @@ Ce projet a été développé pour le Hackathon SN 2025 avec pour objectif de cr
 | Base vectorielle | [Qdrant](https://qdrant.tech/) | Apache 2.0 |
 | LLM | [Llama-3.2-3B-Instruct-Q4_0.gguf](https://huggingface.co/bartowski/Llama-3.2-3B-Instruct-GGUF) | Meta Llama 3 Community License |
 | API | [FastAPI](https://fastapi.tiangolo.com/) | MIT |
-| Interface web | [Gradio](https://gradio.app/) | Apache 2.0 |
 | Scraping | [BeautifulSoup](https://www.crummy.com/software/BeautifulSoup/) | MIT |
 | PDF Processing | [pdfplumber](https://github.com/jsvine/pdfplumber) | MIT |
 
@@ -36,7 +34,6 @@ Ce projet a été développé pour le Hackathon SN 2025 avec pour objectif de cr
 ├── data/
 │   ├── corpus.json          # Documents administratifs (500+)
 │   └── sources.txt          # Sources des documents
-├── models/                  # Modèles GGUF (téléchargés automatiquement)
 ├── src/
 │   ├── rag/
 │   │   ├── embedder.py      # Génération d'embeddings
@@ -45,8 +42,6 @@ Ce projet a été développé pour le Hackathon SN 2025 avec pour objectif de cr
 │   │   └── generator.py     # Génération de réponses
 │   ├── collect.py           # Scraping des sites gouvernementaux
 │   └── index_corpus.py      # Indexation des documents
-├── frontend/
-│   └── app.py               # Interface web Gradio
 ├── evaluation/
 │   └── eval.py              # Script d'évaluation
 ├── main.py                  # Point d'entrée principal
@@ -62,8 +57,13 @@ Ce projet a été développé pour le Hackathon SN 2025 avec pour objectif de cr
 
 ```bash
 # Cloner le dépôt
-git clone https://github.com/votre-username/BFA-administration-assistant.git
+git clone https://github.com/dayende-ib/BFA-administration-assistant.git
 cd BFA-administration-assistant
+
+# Télécharger le modèle LLM requis
+# Téléchargez manuellement le modèle Llama-3.2-3B-Instruct-Q4_0.gguf depuis:
+# https://huggingface.co/bartowski/Llama-3.2-3B-Instruct-GGUF
+# Et placez-le dans le dossier src/models/
 
 # Lancer avec Docker Compose
 docker-compose up --build
@@ -71,13 +71,14 @@ docker-compose up --build
 
 L'application sera accessible à:
 - API: http://localhost:8000
-- Interface web: http://localhost:7860
+
+**Note importante:** Le modèle GGUF doit être monté dans le conteneur. Le dossier `src/models/` est automatiquement monté comme volume dans le conteneur Docker.
 
 ### Option 2: Installation manuelle
 
 ```bash
 # Cloner le dépôt
-git clone https://github.com/votre-username/BFA-administration-assistant.git
+git clone https://github.com/dayende-ib/BFA-administration-assistant.git
 cd BFA-administration-assistant
 
 # Créer un environnement virtuel
@@ -87,14 +88,13 @@ source venv/bin/activate  # Sur Windows: venv\Scripts\activate
 # Installer les dépendances
 pip install -r requirements.txt
 
-# Télécharger le modèle LLM (si nécessaire)
-python download_model.py
+# Télécharger le modèle LLM requis
+# Téléchargez manuellement le modèle Llama-3.2-3B-Instruct-Q4_0.gguf depuis:
+# https://huggingface.co/bartowski/Llama-3.2-3B-Instruct-GGUF
+# Et placez-le dans le dossier src/models/
 
 # Lancer l'API
 python main.py api
-
-# Dans un autre terminal, lancer l'interface web
-python main.py frontend
 ```
 
 ## 📊 Résultats de l'évaluation
@@ -108,13 +108,6 @@ python main.py frontend
 | Taux de citation | 92% |
 
 ## 🎯 Utilisation
-
-### Via l'interface web
-
-1. Accédez à http://localhost:7860
-2. Posez votre question dans le champ de texte
-3. Cliquez sur "Poser la question" ou appuyez sur Entrée
-4. Consultez la réponse et les sources
 
 ### Via l'API
 
