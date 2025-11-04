@@ -2,7 +2,7 @@ from gpt4all import GPT4All
 
 class Generator:
     def __init__(self, model_path="src/models/Llama-3.2-3B-Instruct-Q4_0.gguf"):
-        self.model = GPT4All(model_path, device='gpu' if self._has_cuda() else 'cpu')
+        self.model = GPT4All(model_path, device='cpu')
 
     def _has_cuda(self):
         """Check if CUDA is available."""

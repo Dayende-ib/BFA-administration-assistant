@@ -1,3 +1,39 @@
+# VCS
+.git
+.gitignore
+
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+.Python
+env/
+venv/
+.venv/
+
+# OS / Editor
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+
+# Caches / build
+dist/
+build/
+.cache/
+
+# Models & data (mounted as volumes)
+src/models/
+models/
+data/*.jsonl
+data/*.parquet
+data/raw/
+*.gguf
+
+# Env/config secrets
+.env
+.env.*
 # Fichiers à ignorer lors du build Docker
 __pycache__/
 *.pyc

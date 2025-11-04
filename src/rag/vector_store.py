@@ -3,6 +3,7 @@ from qdrant_client.http.models import Distance, VectorParams, PointStruct, Filte
 import json
 import uuid
 import os
+import time
 
 
 class VectorStore:
@@ -23,13 +24,23 @@ class VectorStore:
     def create_collection(self, vector_size=768):
         if self.client is None:
             raise RuntimeError("Qdrant client not initialized. Start Qdrant or check QDRANT_HOST/QDRANT_PORT.")
+        # If collection exists, return silently
+        try:
+            _ = self.client.get_collection(self.collection_name)
+            return
+        except Exception:
+            pass
 
-        # Create collection with hybrid search support (both vector and keyword search)
-        self.client.create_collection(
-            collection_name=self.collection_name,
-            vectors_config=VectorParams(size=vector_size, distance=Distance.COSINE),
-            # Enable hybrid search with keyword indexing
-        )
+        # Create collection (idempotent): ignore 409 conflict if already exists
+        try:
+            self.client.create_collection(
+                collection_name=self.collection_name,
+                vectors_config=VectorParams(size=vector_size, distance=Distance.COSINE),
+            )
+        except Exception as e:
+            msg = str(e)
+            if "already exists" not in msg and "409" not in msg:
+                raise
 
         # Create payload index for filtering
         try:
@@ -94,3 +105,11 @@ class VectorStore:
             query_filter=search_filter
         )
         return [hit.payload for hit in hits]
+
+    def ping(self) -> bool:
+        try:
+            # simple call to verify connectivity
+            _ = self.client.get_collections()
+            return True
+        except Exception:
+            return False

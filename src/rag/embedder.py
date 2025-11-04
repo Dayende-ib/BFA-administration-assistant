@@ -1,13 +1,21 @@
 from sentence_transformers import SentenceTransformer
 import torch
+from functools import lru_cache
 
 class Embedder:
     def __init__(self):
         # Use multilingual-e5-base for better French performance
         self.model = SentenceTransformer(
             "intfloat/multilingual-e5-base",
-            device="cuda" if torch.cuda.is_available() else "cpu"
+            device="cpu"
         )
+        self._cache = {}
 
     def embed(self, texts):
-        return self.model.encode(texts, normalize_embeddings=True).tolist()
+        # Simple in-memory cache per texte -> embedding
+        missing = [t for t in texts if t not in self._cache]
+        if missing:
+            embeddings = self.model.encode(missing, normalize_embeddings=True).tolist()
+            for t, e in zip(missing, embeddings):
+                self._cache[t] = e
+        return [self._cache[t] for t in texts]

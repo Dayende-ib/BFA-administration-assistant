@@ -1,4 +1,5 @@
 from fastapi import FastAPI, HTTPException, BackgroundTasks
+from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 from typing import Optional
 import os
@@ -26,7 +27,24 @@ except Exception as e:
     index_corpus = None
     print("Info: index_corpus non disponible:", e)
 
+try:
+    from utils.settings import settings
+except Exception:
+    # Fallback minimal settings
+    class _Fallback:
+        ALLOW_ORIGINS = ["*"]
+        MODEL_DIR = os.path.join(os.path.dirname(os.path.dirname(__file__)), "models")
+    settings = _Fallback()
+
 app = FastAPI(title="BFA Administration Assistant API")
+# CORS
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=getattr(settings, "ALLOW_ORIGINS", ["*"]),
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 # variable to store the loaded model path (if any)
 generator_model_path = None
 
@@ -60,7 +78,7 @@ def startup_event():
     # Initialize the generator if available and if a model is mounted
     try:
         if Generator is not None:
-            model_dir = os.environ.get("MODEL_DIR", os.path.join(BASE_DIR, "models"))
+            model_dir = getattr(settings, "MODEL_DIR", os.path.join(BASE_DIR, "models"))
             # default filename used in src/rag/generator.py
             default_name = "Llama-3.2-3B-Instruct-Q4_0.gguf"
             # Prioritize the default file if it exists, otherwise search for any *.gguf
@@ -92,9 +110,22 @@ def startup_event():
 def health():
     return {"status": "ok"}
 
+@app.get("/ready")
+def ready():
+    """Readiness probe: vérifie retriever, generator et présence du modèle."""
+    status = {
+        "retriever": bool(retriever),
+        "generator": bool(generator),
+        "model_path": generator_model_path,
+    }
+    if not status["retriever"]:
+        raise HTTPException(status_code=503, detail="Retriever non initialisé")
+    # Generator peut être optionnel si on veut citations seules
+    return status
+
 
 @app.post("/generate", response_model=GenerateResponse)
-def generate(req: GenerateRequest):
+async def generate(req: GenerateRequest):
     if retriever is None:
         raise HTTPException(status_code=503, detail="Retriever non initialisé")
 
@@ -112,7 +143,7 @@ def generate(req: GenerateRequest):
     # Generation
     if generator is None:
         # Return just the docs if no model
-        return {"answer": "Model not available in container. Mount a GGUF model in /app/src/models.", "sources": docs}
+        return {"answer": "Modèle indisponible. Montez un modèle GGUF dans /app/src/models.", "sources": docs}
 
     try:
         answer = generator.generate(req.question, docs)
