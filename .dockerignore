@@ -1,0 +1,61 @@
+# VCS
+.git
+.gitignore
+
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+.Python
+env/
+venv/
+.venv/
+
+# OS / Editor
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+
+# Caches / build
+dist/
+build/
+.cache/
+
+# Models & data (mounted as volumes)
+src/models/
+models/
+data/*.jsonl
+data/*.parquet
+data/raw/
+*.gguf
+
+# Env/config secrets
+.env
+.env.*
+# Fichiers à ignorer lors du build Docker
+__pycache__/
+*.pyc
+.pytest_cache/
+.venv/
+venv/
+env/
+build/
+dist/
+.git/
+*.egg-info/
+
+# Données et modèles volumineux à monter en volume plutôt que d'inclure dans l'image
+# data/  # Commented out to allow specific data files
+!data/corpus.json
+!data/sources.txt
+old/
+src/models/
+
+# Fichiers locaux et configuration
+.env*
+*.sqlite3
+*.db
+.git*
+.pytest_cache

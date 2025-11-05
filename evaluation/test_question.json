@@ -1,0 +1,94 @@
+[
+  {
+    "question": "Quels sont les documents à fournir pour un acte de naissance original ?",
+    "reponse_attendue": "CNIB du demandeur ou des parents, nom complet, date et lieu de naissance."
+  },
+  {
+    "question": "Combien coûte un acte de mariage ?",
+    "reponse_attendue": "Le coût est de 500 FCFA."
+  },
+  {
+    "question": "Comment faire une demande de casier judiciaire ?",
+    "reponse_attendue": "Il faut fournir une copie de la CNIB et un timbre fiscal de 500 FCFA. Le délai est de 5 jours."
+  },
+  {
+    "question": "Qui peut demander une bourse d'études secondaires ?",
+    "reponse_attendue": "Les élèves avec une moyenne > 12/20 et dont les parents ont des revenus < 200 000 FCFA/mois."
+  },
+  {
+    "question": "Comment obtenir le passeport ordinaire ?",
+    "reponse_attendue": "Il faut un acte de naissance, la CNIB, 2 photos et 25 000 FCFA."
+  },
+  {
+    "question": "Quelles sont les pièces pour un certificat de nationalité ?",
+    "reponse_attendue": "Il faut un acte de naissance, la CNIB des parents, prêter serment et payer 5 000 FCFA."
+  },
+  {
+    "question": "Je veux m'inscrire au BEPC, que dois-je faire ?",
+    "reponse_attendue": "Fournir le bulletin de 3e, acte de naissance, CNIB, 2 photos et 2 000 FCFA."
+  },
+  {
+    "question": "C'est quoi l'IUTS ?",
+    "reponse_attendue": "C'est l'Impôt Unique sur les Traitements et les Salaires, un prélèvement fiscal sur les salaires."
+  },
+  {
+    "question": "Quels sont les documents pour une demande d'extrait d'acte de naissance avec filiation ?",
+    "reponse_attendue": "CNIB, indication des parents, date et lieu de naissance."
+  },
+  {
+    "question": "Combien coûte un jugement supplétif d'acte de naissance ?",
+    "reponse_attendue": "5 000 FCFA."
+  },
+  {
+    "question": "Comment déclarer un accident de travail ?",
+    "reponse_attendue": "Il faut un certificat médical, un témoin, la CNIB et le contrat, dans les 48h après l'accident."
+  },
+  {
+    "question": "Quels sont les documents pour une demande de pension de retraite CNSS ?",
+    "reponse_attendue": "CNIB, acte de naissance, 180 mois de cotisations, et certificat de cessation d'activité."
+  },
+  {
+    "question": "Je suis un étranger, comment obtenir une autorisation de travail ?",
+    "reponse_attendue": "Il faut un contrat, un diplôme, un titre de séjour et payer 100 000 FCFA."
+  },
+  {
+    "question": "Comment obtenir un duplicata de permis de conduire ?",
+    "reponse_attendue": "Il faut une déclaration de perte, la CNIB, 2 photos et payer 10 000 FCFA."
+  },
+  {
+    "question": "Quels sont les documents pour une visite technique de véhicule ?",
+    "reponse_attendue": "Carte grise, ancien certificat, et 15 000 FCFA."
+  },
+  {
+    "question": "Combien coûte le visa de tourisme pour entrer au Burkina ?",
+    "reponse_attendue": "50 000 FCFA."
+  },
+  {
+    "question": "Comment obtenir une carte d'artiste professionnel ?",
+    "reponse_attendue": "Il faut un portfolio, 3 preuves d'activité, la CNIB et payer 15 000 FCFA."
+  },
+  {
+    "question": "J'ai perdu mon diplôme du BAC, comment avoir un duplicata ?",
+    "reponse_attendue": "Il faut une déclaration de perte, la CNIB, l'année d'obtention et 5 000 FCFA."
+  },
+  {
+    "question": "Quels sont les frais d'inscription au BAC ?",
+    "reponse_attendue": "2 500 FCFA."
+  },
+  {
+    "question": "Est-ce que le dépistage du VIH est payant ?",
+    "reponse_attendue": "Non, le test est anonyme et gratuit dans tout centre de santé."
+  },
+  {
+    "question": "Comment créer une association ?",
+    "reponse_attendue": "Il faut une assemblée générale constitutive, des statuts, un règlement intérieur et une déclaration au ministère de l'administration territoriale."
+  },
+  {
+    "question": "Quels sont les documents pour un mariage civil ?",
+    "reponse_attendue": "Actes de naissance des futurs époux, certificats de résidence, certificats de célibat et copies des CNIB."
+  },
+  {
+    "question": "Comment obtenir un certificat de résidence ?",
+    "reponse_attendue": "Il faut une quittance d'eau ou d'électricité, un contrat de bail ou une attestation d'hébergement et une copie de la CNIB."
+  }
+]

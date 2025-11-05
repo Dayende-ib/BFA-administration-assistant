@@ -1,0 +1,8 @@
+transformers==4.57.1
+torch==2.9.0
+sentence-transformers==5.1.2
+qdrant-client==1.15.1
+accelerate
+fastapi
+uvicorn[standard]
+fastapi-cors
