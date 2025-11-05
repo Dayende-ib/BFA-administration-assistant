@@ -1,120 +1,49 @@
 from qdrant_client import QdrantClient
-from qdrant_client.http.models import Distance, VectorParams, PointStruct, Filter, FieldCondition, MatchValue
-import json
+from qdrant_client.models import Distance, VectorParams, PointStruct, Filter, FieldCondition, MatchValue
 import uuid
-import os
-import time
-
 
 class VectorStore:
-    def __init__(self, host=None, port=None):
-        # Reading environment variables if present (Docker/.env compatibility)
-        host = host or os.environ.get("QDRANT_HOST", "localhost")
-        port = port or int(os.environ.get("QDRANT_PORT", 6333))
-
+    def __init__(self):
+        self.client = QdrantClient(":memory:")
         self.collection_name = "procedures_bf"
 
-        try:
-            self.client = QdrantClient(host=host, port=port)
-        except Exception as e:
-            # Don't crash initialization: log and leave client as None
-            print(f"Warning: unable to connect to Qdrant ({host}:{port}) : {e}")
-            self.client = None
-
     def create_collection(self, vector_size=768):
-        if self.client is None:
-            raise RuntimeError("Qdrant client not initialized. Start Qdrant or check QDRANT_HOST/QDRANT_PORT.")
-        # If collection exists, return silently
         try:
-            _ = self.client.get_collection(self.collection_name)
-            return
-        except Exception:
-            pass
-
-        # Create collection (idempotent): ignore 409 conflict if already exists
-        try:
+            self.client.get_collection(self.collection_name)
+        except:
             self.client.create_collection(
                 collection_name=self.collection_name,
-                vectors_config=VectorParams(size=vector_size, distance=Distance.COSINE),
+                vectors_config=VectorParams(size=vector_size, distance=Distance.COSINE)
             )
-        except Exception as e:
-            msg = str(e)
-            if "already exists" not in msg and "409" not in msg:
-                raise
-
-        # Create payload index for filtering
-        try:
-            self.client.create_payload_index(
-                collection_name=self.collection_name,
-                field_name="Espace"
-            )
-            self.client.create_payload_index(
-                collection_name=self.collection_name,
-                field_name="Thème"
-            )
-        except Exception as e:
-            print(f"Warning: unable to create payload indexes: {e}")
 
     def upsert(self, embeddings, documents):
-        points = []
-        for emb, doc in zip(embeddings, documents):
-            point = PointStruct(
+        points = [
+            PointStruct(
                 id=str(uuid.uuid4()),
                 vector=emb,
                 payload={
                     "titre": doc["Titre"],
                     "description": doc["Description"],
                     "url": doc["Adresse web"],
-                    "source": doc.get("source", "ServicePublic.gov.bf"),
-                    "Espace": doc.get("Espace", "Particuliers"),
-                    "Thème": doc.get("Thème", "Non spécifié"),
-                    "Coût(s)": doc.get("Coût(s)", "Non spécifié")
+                    "Espace": doc.get("Espace", ""),
+                    "Thème": doc.get("Thème", "")
                 }
             )
-            points.append(point)
-        
-        if self.client is None:
-            raise RuntimeError("Qdrant client not initialized. Unable to upsert points.")
-
+            for emb, doc in zip(embeddings, documents)
+        ]
         self.client.upsert(collection_name=self.collection_name, points=points)
+        print(f"{len(points)} documents ont été ajoutés à l'index.")
 
     def search(self, query_embedding, top_k=5, espace_filter=None, theme_filter=None):
-        if self.client is None:
-            raise RuntimeError("Qdrant client not initialized. Unable to perform search.")
-
-        # Build filter conditions
-        must_conditions = []
+        must = []
         if espace_filter:
-            must_conditions.append(FieldCondition(
-                key="Espace",
-                match=MatchValue(value=espace_filter)
-            ))
+            must.append(FieldCondition(key="Espace", match=MatchValue(value=espace_filter)))
         if theme_filter:
-            must_conditions.append(FieldCondition(
-                key="Thème",
-                match=MatchValue(value=theme_filter)
-            ))
-
-        search_filter = Filter(must=must_conditions) if must_conditions else None
-
-        # Perform vector search with optional filters
+            must.append(FieldCondition(key="Thème", match=MatchValue(value=theme_filter)))
         hits = self.client.search(
             collection_name=self.collection_name,
             query_vector=query_embedding,
             limit=top_k,
-            query_filter=search_filter,
-            with_vectors=False, # We don't need the vectors in the search result
-            with_payload=True, # Return the full payload
-            search_params={"hnsw_ef": 128}
+            query_filter=Filter(must=must) if must else None
         )
         return [hit.payload for hit in hits]
-
-    def ping(self) -> bool:
-        try:
-            if self.client is None:
-                return False
-            # simple call to verify connectivity
-            _ = self.client.get_collections()
-            return True
-        except Exception:
-            return False
