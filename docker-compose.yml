@@ -27,9 +27,7 @@ services:
       - qdrant
     command: >
       sh -c "
-        # Ré-indexation au démarrage
-        python src/index_corpus.py &&
-        # Démarrage de l'API
+        # Démarrage de l'API sans ré-indexation au démarrage
         uvicorn src.api.main:app --host 0.0.0.0 --port 8000
       "
 

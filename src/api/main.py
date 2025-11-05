@@ -1,5 +1,6 @@
 from fastapi import FastAPI, HTTPException, BackgroundTasks
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.staticfiles import StaticFiles
 from pydantic import BaseModel
 from typing import Optional
 import os
@@ -37,14 +38,15 @@ except Exception:
     settings = _Fallback()
 
 app = FastAPI(title="API de l'assistant administratif BFA")
-# CORS
+# CORS - Allow all origins for development
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=getattr(settings, "ALLOW_ORIGINS", ["*"]),
+    allow_origins=["*"],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
 )
+
 # variable pour stocker le chemin du modèle chargé (le cas échéant)
 generator_model_path = None
 
@@ -192,3 +194,11 @@ def model_status():
         "indexer_available": bool(index_corpus),
     }
     return status
+
+# Serve static files from frontend directory
+# This should be at the end to avoid interfering with API routes
+FRONTEND_DIR = os.path.join(os.path.dirname(BASE_DIR), "frontend")
+if os.path.isdir(FRONTEND_DIR):
+    app.mount("/", StaticFiles(directory=FRONTEND_DIR, html=True), name="frontend")
+else:
+    print(f"Warning: Frontend directory not found at {FRONTEND_DIR}")
