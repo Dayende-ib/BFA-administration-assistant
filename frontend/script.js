@@ -2,10 +2,10 @@ const chat = document.getElementById('chat');
 const input = document.getElementById('userInput');
 const sendBtn = document.getElementById('sendBtn');
 
-// --- URL de votre API (Backend) ---
+// URL de l'API backend
 const API_BASE_URL = "http://localhost:8000";
 
-// ... (Le code pour le dark mode reste le même) ...
+// Initialisation du thème (mode clair/sombre)
 document.addEventListener('DOMContentLoaded', () => {
   const savedTheme = localStorage.getItem('theme') || 'light';
   if (savedTheme === 'dark') {
@@ -13,16 +13,13 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 });
 
-// ==========================================================
-// NOUVELLE FONCTION : Formatage de la réponse
-// ==========================================================
 /**
- * Prend la réponse brute de l'API (un seul bloc de texte)
- * et la transforme en HTML structuré.
+ * Formate la réponse de l'API en HTML structuré
+ * @param {string} answer - Réponse brute de l'API
+ * @returns {string} - HTML formaté
  */
 function formatApiAnswer(answer) {
-  // Si la réponse n'est pas structurée (ex: "Aucune information..."),
-  // on la retourne telle quelle, mais en protégeant contre le HTML.
+  // Si la réponse n'est pas structurée, on la retourne telle quelle
   if (!answer.includes('Pièces à fournir')) {
      // Convertit les sauts de ligne simples en <br>
      return answer.replace(/\n/g, '<br>');
@@ -38,23 +35,26 @@ function formatApiAnswer(answer) {
     
     if (parts.length === 2) {
       // Si on a une Clé:Valeur, on met la clé en gras
-      // On utilise <p> pour garantir le saut de ligne
       html += `<p style="margin-bottom: 8px;"><strong>${parts[0].trim()} :</strong> ${parts[1].trim()}</p>`;
     } else if (line.trim()) {
-      // Pour les lignes sans ':', on les affiche simplement (sécurité)
+      // Pour les lignes sans ':', on les affiche simplement
       html += `<p>${line}</p>`;
     }
   });
   
   return html;
 }
-// ==========================================================
 
+/**
+ * Envoie un message à l'API et affiche la réponse
+ * @param {string} question - Question de l'utilisateur
+ */
 const sendMessage = async (question) => {
+  // Récupère la question depuis l'input si non fournie
   if (!question) question = input.value.trim();
   if (!question) return;
 
-  // (Affichage du message utilisateur - inchangé)
+  // Affiche le message de l'utilisateur dans l'interface
   const userMessage = document.createElement('div');
   userMessage.className = 'message user';
   userMessage.innerHTML = `<div class="message-content"><div class="message-text">${question}</div></div>`;
@@ -62,7 +62,7 @@ const sendMessage = async (question) => {
   input.value = '';
   chat.scrollTop = chat.scrollHeight;
 
-  // (Affichage du loader - inchangé)
+  // Affiche l'indicateur de chargement
   const botMessage = document.createElement('div');
   botMessage.className = 'message bot';
   botMessage.innerHTML = `<div class="avatar"><i class="fas fa-robot"></i></div><div class="message-content"><div class="typing-indicator"><span></span><span></span><span></span></div></div>`;
@@ -70,7 +70,7 @@ const sendMessage = async (question) => {
   chat.scrollTop = chat.scrollHeight;
 
   try {
-    
+    // Envoie la requête à l'API
     const response = await fetch(`${API_BASE_URL}/generate`, {
       method: 'POST',
       headers: {
@@ -78,22 +78,23 @@ const sendMessage = async (question) => {
       },
       body: JSON.stringify({
         question: question,
-        top_k: 5 // (Cet argument est ignoré par le backend qui force top_k=1)
+        top_k: 5 // Cet argument est ignoré par le backend qui force top_k=1
       })
     });
 
+    // Vérifie si la requête a réussi
     if (!response.ok) {
       const errorData = await response.text();
       throw new Error(`Erreur HTTP! status: ${response.status}. Réponse: ${errorData}`);
     }
 
+    // Récupère et traite la réponse
     const data = await response.json();
     
-    // --- MODIFICATION ICI ---
-    // On formate la réponse AVANT de l'afficher
+    // Formate la réponse avant de l'afficher
     const formattedAnswer = formatApiAnswer(data.answer);
-    // -------------------------
     
+    // Construit le HTML de la réponse
     let responseHTML = `
       <div class="avatar">
         <i class="fas fa-robot"></i>
@@ -102,7 +103,7 @@ const sendMessage = async (question) => {
         <div class="message-text">${formattedAnswer}</div>
     `;
     
-    // (Le reste : gestion des sources et du feedback - inchangé)
+    // Ajoute les sources si disponibles
     if (data.sources && data.sources.length > 0) {
       responseHTML += `
         <div class="sources">
@@ -116,6 +117,7 @@ const sendMessage = async (question) => {
       `;
     }
     
+    // Ajoute les boutons de feedback
     responseHTML += `
         <div class="feedback">
           <span>Cette réponse vous a-t-elle aidé ?</span>
@@ -125,9 +127,11 @@ const sendMessage = async (question) => {
       </div>
     `;
     
+    // Affiche la réponse dans l'interface
     botMessage.innerHTML = responseHTML;
 
   } catch (error) {
+    // Gère les erreurs de connexion
     console.error('Error:', error);
     botMessage.innerHTML = `
       <div class="avatar">
@@ -139,11 +143,14 @@ const sendMessage = async (question) => {
     `;
   }
   
+  // Fait défiler vers le bas
   chat.scrollTop = chat.scrollHeight;
 };
 
-// (Le reste de script.js : sendFeedback, askQuestion, listeners... reste inchangé)
-// ...
+/**
+ * Envoie un feedback sur la réponse
+ * @param {string} feedback - Type de feedback ('positive' ou 'negative')
+ */
 const sendFeedback = (feedback) => {
   console.log('Feedback received:', feedback);
   const confirmation = document.createElement('div');
@@ -164,11 +171,16 @@ const sendFeedback = (feedback) => {
   chat.scrollTop = chat.scrollHeight;
 };
 
+/**
+ * Pose une question prédéfinie
+ * @param {string} q - Question à poser
+ */
 const askQuestion = (q) => {
   input.value = q;
   sendMessage(q);
 };
 
+// Écouteurs d'événements
 sendBtn.addEventListener('click', () => sendMessage());
 input.addEventListener('keypress', e => {
   if (e.key === 'Enter') sendMessage();

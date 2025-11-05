@@ -1,473 +1,522 @@
+/* Définition des variables CSS pour les couleurs et styles */
 :root {
-  --vert: #009A44;
-  --rouge: #CE1126;
-  --jaune: #FFD100;
-  --gris-clair: #F8F9FA;
-  --texte: #212529;
-  --blanc: #FFFFFF;
-  --gris-sombre: #2D2F31;
-  --texte-sombre: #E1E3E6;
-  --card-bg: #FFFFFF;
-  --card-bg-dark: #3A3C3E;
-  --border-color: #e0e0e0;
-  --border-color-dark: #555759;
-  --user-message-bg: var(--vert);
-  --bot-message-bg: var(--card-bg);
-  --bot-message-bg-dark: var(--card-bg-dark);
-  --avatar-bg: #e9ecef;
-  --avatar-bg-dark: #495057;
+  --vert: #009A44; /* Couleur verte principale */
+  --rouge: #CE1126; /* Couleur rouge du drapeau burkinabé */
+  --jaune: #FFD100; /* Couleur jaune du drapeau burkinabé */
+  --gris-clair: #F8F9FA; /* Fond clair */
+  --texte: #212529; /* Couleur du texte en mode clair */
+  --blanc: #FFFFFF; /* Couleur blanche */
+  --gris-sombre: #2D2F31; /* Fond sombre */
+  --texte-sombre: #E1E3E6; /* Couleur du texte en mode sombre */
+  --card-bg: #FFFFFF; /* Fond des cartes en mode clair */
+  --card-bg-dark: #3A3C3E; /* Fond des cartes en mode sombre */
+  --border-color: #e0e0e0; /* Couleur des bordures en mode clair */
+  --border-color-dark: #555759; /* Couleur des bordures en mode sombre */
+  --user-message-bg: var(--vert); /* Fond des messages de l'utilisateur */
+  --bot-message-bg: var(--card-bg); /* Fond des messages du bot en mode clair */
+  --bot-message-bg-dark: var(--card-bg-dark); /* Fond des messages du bot en mode sombre */
+  --avatar-bg: #e9ecef; /* Fond de l'avatar en mode clair */
+  --avatar-bg-dark: #495057; /* Fond de l'avatar en mode sombre */
 }
 
+/* Réinitialisation des marges et paddings */
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
 }
 
+/* Style du corps de la page */
 body {
-  font-family: 'Open Sans', sans-serif;
-  background: var(--gris-clair);
-  color: var(--texte);
-  height: 100vh;
-  display: flex;
-  flex-direction: column;
-  transition: background-color 0.3s, color 0.3s;
+  font-family: 'Open Sans', sans-serif; /* Police principale */
+  background: var(--gris-clair); /* Fond de la page */
+  color: var(--texte); /* Couleur du texte */
+  height: 100vh; /* Hauteur de la fenêtre */
+  display: flex; /* Affichage en flexbox */
+  flex-direction: column; /* Direction verticale */
+  transition: background-color 0.3s, color 0.3s; /* Transition douce pour le changement de thème */
 }
 
-/* Dark mode styles */
+/* Styles pour le mode sombre */
 body.dark-mode {
-  background: var(--gris-sombre);
-  color: var(--texte-sombre);
+  background: var(--gris-sombre); /* Fond en mode sombre */
+  color: var(--texte-sombre); /* Texte en mode sombre */
 }
 
+/* Style de l'en-tête */
 header {
-  background: var(--blanc);
-  padding: 1rem 1.5rem;
-  box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  z-index: 10;
+  background: var(--blanc); /* Fond blanc */
+  padding: 1rem 1.5rem; /* Espacement interne */
+  box-shadow: 0 2px 10px rgba(0,0,0,0.1); /* Ombre portée */
+  display: flex; /* Affichage en flexbox */
+  justify-content: space-between; /* Espacement entre les éléments */
+  align-items: center; /* Alignement centré verticalement */
+  z-index: 10; /* Priorité d'affichage */
 }
 
-/* Dark mode header */
+/* En-tête en mode sombre */
 body.dark-mode header {
-  background: #333537;
-  box-shadow: 0 2px 10px rgba(0,0,0,0.3);
+  background: #333537; /* Fond gris foncé */
+  box-shadow: 0 2px 10px rgba(0,0,0,0.3); /* Ombre portée plus foncée */
 }
 
+/* Style du logo */
 .logo {
-  display: flex;
-  align-items: center;
-  font-family: 'Montserrat', sans-serif;
-  font-weight: 700;
-  font-size: 1.4rem;
-  color: var(--vert);
+  display: flex; /* Affichage en flexbox */
+  align-items: center; /* Alignement centré verticalement */
+  font-family: 'Montserrat', sans-serif; /* Police du logo */
+  font-weight: 700; /* Graisse du texte */
+  font-size: 1.4rem; /* Taille du texte */
+  color: var(--vert); /* Couleur verte */
 }
 
+/* Icône du logo */
 .logo i {
-  color: var(--jaune);
-  margin-right: 8px;
-  font-size: 1.7rem;
+  color: var(--jaune); /* Couleur jaune */
+  margin-right: 8px; /* Marge à droite */
+  font-size: 1.7rem; /* Taille de l'icône */
 }
 
+/* Partie colorée du logo */
 .logo span {
-  color: var(--rouge);
+  color: var(--rouge); /* Couleur rouge */
 }
 
+/* Contrôles de l'en-tête */
 .header-controls {
-  display: flex;
-  align-items: center;
-  gap: 1rem;
+  display: flex; /* Affichage en flexbox */
+  align-items: center; /* Alignement centré verticalement */
+  gap: 1rem; /* Espacement entre les éléments */
 }
 
+/* Drapeau du Burkina Faso */
 .flag-bf {
-  width: 36px;
-  height: 24px;
-  background: linear-gradient(to bottom, var(--rouge) 50%, var(--vert) 50%);
-  border-radius: 4px;
-  position: relative;
-  overflow: hidden;
-  box-shadow: 0 1px 3px rgba(0,0,0,0.2);
+  width: 36px; /* Largeur */
+  height: 24px; /* Hauteur */
+  background: linear-gradient(to bottom, var(--rouge) 50%, var(--vert) 50%); /* Dégradé rouge/vert */
+  border-radius: 4px; /* Coins arrondis */
+  position: relative; /* Position relative */
+  overflow: hidden; /* Masque le contenu débordant */
+  box-shadow: 0 1px 3px rgba(0,0,0,0.2); /* Ombre portée */
 }
 
+/* Étoile du drapeau */
 .flag-bf::before {
-  content: "★";
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  color: var(--jaune);
-  font-size: 14px;
-  text-shadow: 0 0 2px #000;
+  content: "★"; /* Symbole de l'étoile */
+  position: absolute; /* Position absolue */
+  top: 50%; /* Position verticale */
+  left: 50%; /* Position horizontale */
+  transform: translate(-50%, -50%); /* Centrage parfait */
+  color: var(--jaune); /* Couleur jaune */
+  font-size: 14px; /* Taille de l'étoile */
+  text-shadow: 0 0 2px #000; /* Ombre du texte */
 }
 
-/* Theme toggle button */
+/* Bouton de changement de thème */
 .theme-toggle {
-  background: none;
-  border: none;
-  color: var(--texte);
-  font-size: 1.2rem;
-  cursor: pointer;
-  width: 40px;
-  height: 40px;
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transition: background-color 0.3s;
+  background: none; /* Pas de fond */
+  border: none; /* Pas de bordure */
+  color: var(--texte); /* Couleur du texte */
+  font-size: 1.2rem; /* Taille de l'icône */
+  cursor: pointer; /* Curseur en pointeur */
+  width: 40px; /* Largeur */
+  height: 40px; /* Hauteur */
+  border-radius: 50%; /* Forme circulaire */
+  display: flex; /* Affichage en flexbox */
+  align-items: center; /* Alignement centré verticalement */
+  justify-content: center; /* Alignement centré horizontalement */
+  transition: background-color 0.3s; /* Transition douce */
 }
 
+/* Effet au survol du bouton */
 .theme-toggle:hover {
-  background: rgba(0,0,0,0.1);
+  background: rgba(0,0,0,0.1); /* Fond semi-transparent */
 }
 
+/* Bouton en mode sombre */
 body.dark-mode .theme-toggle {
-  color: var(--texte-sombre);
+  color: var(--texte-sombre); /* Couleur du texte en mode sombre */
 }
 
+/* Effet au survol en mode sombre */
 body.dark-mode .theme-toggle:hover {
-  background: rgba(255,255,255,0.1);
+  background: rgba(255,255,255,0.1); /* Fond semi-transparent clair */
 }
 
+/* Conteneur de la conversation */
 .chat-container {
-  flex: 1;
-  max-width: 800px;
-  width: 100%;
-  margin: 0 auto;
-  padding: 1.5rem 1rem;
-  overflow-y: auto;
-  display: flex;
-  flex-direction: column;
-  gap: 1.2rem;
-  background: linear-gradient(180deg, rgba(248,249,250,0.7) 0%, rgba(248,249,250,1) 30%);
-  position: relative;
+  flex: 1; /* Prend tout l'espace disponible */
+  max-width: 800px; /* Largeur maximale */
+  width: 100%; /* Largeur complète */
+  margin: 0 auto; /* Centrage horizontal */
+  padding: 1.5rem 1rem; /* Espacement interne */
+  overflow-y: auto; /* Défilement vertical */
+  display: flex; /* Affichage en flexbox */
+  flex-direction: column; /* Direction verticale */
+  gap: 1.2rem; /* Espacement entre les messages */
+  background: linear-gradient(180deg, rgba(248,249,250,0.7) 0%, rgba(248,249,250,1) 30%); /* Dégradé de fond */
+  position: relative; /* Position relative */
 }
 
-/* Dark mode chat container */
+/* Conteneur en mode sombre */
 body.dark-mode .chat-container {
-  background: linear-gradient(180deg, rgba(45,47,49,0.7) 0%, rgba(45,47,49,1) 30%);
+  background: linear-gradient(180deg, rgba(45,47,49,0.7) 0%, rgba(45,47,49,1) 30%); /* Dégradé foncé */
 }
 
-/* Welcome message styling */
+/* Message de bienvenue */
 .welcome-message {
-  max-width: 90%;
-  background: var(--bot-message-bg);
-  border: 1px solid var(--border-color);
-  border-radius: 18px;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
-  display: flex;
-  align-items: flex-start;
-  gap: 12px;
-  padding: 1.2rem;
-  margin-top: 1rem;
+  max-width: 90%; /* Largeur maximale */
+  background: var(--bot-message-bg); /* Fond du message */
+  border: 1px solid var(--border-color); /* Bordure */
+  border-radius: 18px; /* Coins arrondis */
+  box-shadow: 0 2px 8px rgba(0,0,0,0.08); /* Ombre portée */
+  display: flex; /* Affichage en flexbox */
+  align-items: flex-start; /* Alignement en haut */
+  gap: 12px; /* Espacement entre éléments */
+  padding: 1.2rem; /* Espacement interne */
+  margin-top: 1rem; /* Marge en haut */
 }
 
+/* Message de bienvenue en mode sombre */
 body.dark-mode .welcome-message {
-  background: var(--bot-message-bg-dark);
-  border-color: var(--border-color-dark);
-  box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+  background: var(--bot-message-bg-dark); /* Fond sombre */
+  border-color: var(--border-color-dark); /* Bordure sombre */
+  box-shadow: 0 2px 8px rgba(0,0,0,0.2); /* Ombre portée sombre */
 }
 
+/* Avatar des messages */
 .avatar {
-  width: 36px;
-  height: 36px;
-  border-radius: 50%;
-  background: var(--avatar-bg);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-shrink: 0;
+  width: 36px; /* Largeur */
+  height: 36px; /* Hauteur */
+  border-radius: 50%; /* Forme circulaire */
+  background: var(--avatar-bg); /* Fond de l'avatar */
+  display: flex; /* Affichage en flexbox */
+  align-items: center; /* Alignement centré verticalement */
+  justify-content: center; /* Alignement centré horizontalement */
+  flex-shrink: 0; /* Ne rétrécit pas */
 }
 
+/* Avatar en mode sombre */
 body.dark-mode .avatar {
-  background: var(--avatar-bg-dark);
+  background: var(--avatar-bg-dark); /* Fond sombre */
 }
 
+/* Icône de l'avatar */
 .avatar i {
-  color: var(--vert);
-  font-size: 18px;
+  color: var(--vert); /* Couleur verte */
+  font-size: 18px; /* Taille de l'icône */
 }
 
+/* Contenu du message */
 .message-content {
-  flex: 1;
+  flex: 1; /* Prend tout l'espace disponible */
 }
 
+/* Texte du message */
 .message-text {
-  line-height: 1.5;
-  font-size: 0.95rem;
+  line-height: 1.5; /* Hauteur de ligne */
+  font-size: 0.95rem; /* Taille du texte */
 }
 
+/* Style général des messages */
 .message {
-  max-width: 85%;
-  padding: 1rem 1.4rem;
-  border-radius: 18px;
-  line-height: 1.5;
-  font-size: 0.95rem;
-  word-wrap: break-word;
-  position: relative;
-  animation: fadeIn 0.3s ease-in;
-  box-shadow: 0 1px 4px rgba(0,0,0,0.08);
+  max-width: 85%; /* Largeur maximale */
+  padding: 1rem 1.4rem; /* Espacement interne */
+  border-radius: 18px; /* Coins arrondis */
+  line-height: 1.5; /* Hauteur de ligne */
+  font-size: 0.95rem; /* Taille du texte */
+  word-wrap: break-word; /* Retour à la ligne automatique */
+  position: relative; /* Position relative */
+  animation: fadeIn 0.3s ease-in; /* Animation d'apparition */
+  box-shadow: 0 1px 4px rgba(0,0,0,0.08); /* Ombre portée */
 }
 
+/* Animation d'apparition des messages */
 @keyframes fadeIn {
-  from { opacity: 0; transform: translateY(10px); }
-  to { opacity: 1; transform: translateY(0); }
+  from { opacity: 0; transform: translateY(10px); } /* Départ : invisible et décalé */
+  to { opacity: 1; transform: translateY(0); } /* Fin : visible et à sa position */
 }
 
+/* Messages de l'utilisateur */
 .user {
-  align-self: flex-end;
-  background: var(--user-message-bg);
-  color: white;
-  border-bottom-right-radius: 4px;
-  box-shadow: 0 2px 8px rgba(0, 154, 68, 0.3);
-  max-width: 80%;
-  padding: 1rem 1.4rem;
+  align-self: flex-end; /* Alignement à droite */
+  background: var(--user-message-bg); /* Fond vert */
+  color: white; /* Texte blanc */
+  border-bottom-right-radius: 4px; /* Coin inférieur droit carré */
+  box-shadow: 0 2px 8px rgba(0, 154, 68, 0.3); /* Ombre verte */
+  max-width: 80%; /* Largeur maximale */
+  padding: 1rem 1.4rem; /* Espacement interne */
 }
 
+/* Messages du bot */
 .bot {
-  align-self: flex-start;
-  background: var(--bot-message-bg);
-  border: 1px solid var(--border-color);
-  border-bottom-left-radius: 4px;
-  display: flex;
-  align-items: flex-start;
-  gap: 12px;
-  padding: 1.2rem;
+  align-self: flex-start; /* Alignement à gauche */
+  background: var(--bot-message-bg); /* Fond blanc */
+  border: 1px solid var(--border-color); /* Bordure */
+  border-bottom-left-radius: 4px; /* Coin inférieur gauche carré */
+  display: flex; /* Affichage en flexbox */
+  align-items: flex-start; /* Alignement en haut */
+  gap: 12px; /* Espacement entre éléments */
+  padding: 1.2rem; /* Espacement interne */
 }
 
-/* Dark mode messages */
+/* Messages du bot en mode sombre */
 body.dark-mode .bot {
-  background: var(--bot-message-bg-dark);
-  border-color: var(--border-color-dark);
-  box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+  background: var(--bot-message-bg-dark); /* Fond sombre */
+  border-color: var(--border-color-dark); /* Bordure sombre */
+  box-shadow: 0 2px 8px rgba(0,0,0,0.2); /* Ombre portée sombre */
 }
 
+/* Suggestions de questions */
 .suggestions {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.8rem;
-  justify-content: center;
-  max-width: 650px;
-  margin: 0 auto 1rem auto;
+  display: flex; /* Affichage en flexbox */
+  flex-wrap: wrap; /* Retour à la ligne automatique */
+  gap: 0.8rem; /* Espacement entre cartes */
+  justify-content: center; /* Centrage horizontal */
+  max-width: 650px; /* Largeur maximale */
+  margin: 0 auto 1rem auto; /* Marges automatiques pour centrage */
 }
 
+/* Cartes de suggestions */
 .suggestion-card {
-  background: var(--card-bg);
-  border: 1px solid var(--border-color);
-  border-radius: 30px;
-  padding: 0.8rem 1.2rem;
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  font-size: 0.88rem;
-  font-weight: 500;
-  color: var(--texte);
-  cursor: pointer;
-  transition: all 0.25s ease;
-  box-shadow: 0 2px 6px rgba(0,0,0,0.06);
-  min-width: 180px;
-  max-width: 300px;
-  flex: 1;
+  background: var(--card-bg); /* Fond blanc */
+  border: 1px solid var(--border-color); /* Bordure */
+  border-radius: 30px; /* Coins très arrondis */
+  padding: 0.8rem 1.2rem; /* Espacement interne */
+  display: flex; /* Affichage en flexbox */
+  align-items: center; /* Alignement centré verticalement */
+  gap: 10px; /* Espacement entre icône et texte */
+  font-size: 0.88rem; /* Taille du texte */
+  font-weight: 500; /* Graisse du texte */
+  color: var(--texte); /* Couleur du texte */
+  cursor: pointer; /* Curseur en pointeur */
+  transition: all 0.25s ease; /* Transition douce */
+  box-shadow: 0 2px 6px rgba(0,0,0,0.06); /* Ombre portée */
+  min-width: 180px; /* Largeur minimale */
+  max-width: 300px; /* Largeur maximale */
+  flex: 1; /* Flexibilité */
 }
 
-/* Dark mode suggestion cards */
+/* Cartes de suggestions en mode sombre */
 body.dark-mode .suggestion-card {
-  background: var(--card-bg-dark);
-  border-color: var(--border-color-dark);
-  color: var(--texte-sombre);
-  box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+  background: var(--card-bg-dark); /* Fond sombre */
+  border-color: var(--border-color-dark); /* Bordure sombre */
+  color: var(--texte-sombre); /* Texte clair */
+  box-shadow: 0 2px 6px rgba(0,0,0,0.2); /* Ombre portée sombre */
 }
 
+/* Effet au survol des cartes */
 .suggestion-card:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 5px 12px rgba(0,0,0,0.12);
-  border-color: var(--vert);
+  transform: translateY(-2px); /* Légère élévation */
+  box-shadow: 0 5px 12px rgba(0,0,0,0.12); /* Ombre portée accentuée */
+  border-color: var(--vert); /* Bordure verte */
 }
 
+/* Effet au survol en mode sombre */
 body.dark-mode .suggestion-card:hover {
-  box-shadow: 0 5px 12px rgba(0,0,0,0.3);
-  border-color: var(--vert);
+  box-shadow: 0 5px 12px rgba(0,0,0,0.3); /* Ombre portée sombre accentuée */
+  border-color: var(--vert); /* Bordure verte */
 }
 
+/* Icônes des cartes de suggestions */
 .suggestion-card i {
-  color: var(--vert);
-  font-size: 1.15rem;
+  color: var(--vert); /* Couleur verte */
+  font-size: 1.15rem; /* Taille de l'icône */
 }
 
-.suggestion-card.blue i { color: #1DA1F2; }
-.suggestion-card.red i { color: var(--rouge); }
-.suggestion-card.yellow i { color: var(--jaune); }
+/* Couleurs spécifiques pour les icônes */
+.suggestion-card.blue i { color: #1DA1F2; } /* Bleu pour Twitter */
+.suggestion-card.red i { color: var(--rouge); } /* Rouge */
+.suggestion-card.yellow i { color: var(--jaune); } /* Jaune */
 
+/* Zone de saisie */
 .input-area {
-  padding: 1rem 1.5rem;
-  background: var(--blanc);
-  box-shadow: 0 -2px 10px rgba(0,0,0,0.1);
-  display: flex;
-  gap: 0.8rem;
-  align-items: center;
-  max-width: 800px;
-  width: 100%;
-  margin: 0 auto;
+  padding: 1rem 1.5rem; /* Espacement interne */
+  background: var(--blanc); /* Fond blanc */
+  box-shadow: 0 -2px 10px rgba(0,0,0,0.1); /* Ombre portée vers le haut */
+  display: flex; /* Affichage en flexbox */
+  gap: 0.8rem; /* Espacement entre éléments */
+  align-items: center; /* Alignement centré verticalement */
+  max-width: 800px; /* Largeur maximale */
+  width: 100%; /* Largeur complète */
+  margin: 0 auto; /* Centrage horizontal */
 }
 
-/* Dark mode input area */
+/* Zone de saisie en mode sombre */
 body.dark-mode .input-area {
-  background: #333537;
-  box-shadow: 0 -2px 10px rgba(0,0,0,0.3);
+  background: #333537; /* Fond gris foncé */
+  box-shadow: 0 -2px 10px rgba(0,0,0,0.3); /* Ombre portée sombre */
 }
 
+/* Champ de saisie */
 input {
-  flex: 1;
-  padding: 0.9rem 1.2rem;
-  border: 1px solid var(--border-color);
-  border-radius: 25px;
-  font-size: 0.95rem;
-  outline: none;
-  background: var(--blanc);
-  color: var(--texte);
+  flex: 1; /* Prend tout l'espace disponible */
+  padding: 0.9rem 1.2rem; /* Espacement interne */
+  border: 1px solid var(--border-color); /* Bordure */
+  border-radius: 25px; /* Coins arrondis */
+  font-size: 0.95rem; /* Taille du texte */
+  outline: none; /* Pas de contour au focus */
+  background: var(--blanc); /* Fond blanc */
+  color: var(--texte); /* Couleur du texte */
 }
 
-/* Dark mode input */
+/* Champ de saisie en mode sombre */
 body.dark-mode input {
-  background: #444648;
-  border-color: var(--border-color-dark);
-  color: var(--texte-sombre);
+  background: #444648; /* Fond gris foncé */
+  border-color: var(--border-color-dark); /* Bordure sombre */
+  color: var(--texte-sombre); /* Texte clair */
 }
 
+/* Champ de saisie au focus */
 input:focus {
-  border-color: var(--vert);
+  border-color: var(--vert); /* Bordure verte */
 }
 
+/* Bouton d'envoi */
 button {
-  background: var(--vert);
-  color: white;
-  border: none;
-  width: 46px;
-  height: 46px;
-  border-radius: 50%;
-  font-size: 1.2rem;
-  cursor: pointer;
-  transition: 0.3s;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  background: var(--vert); /* Fond vert */
+  color: white; /* Texte blanc */
+  border: none; /* Pas de bordure */
+  width: 46px; /* Largeur */
+  height: 46px; /* Hauteur */
+  border-radius: 50%; /* Forme circulaire */
+  font-size: 1.2rem; /* Taille de l'icône */
+  cursor: pointer; /* Curseur en pointeur */
+  transition: 0.3s; /* Transition douce */
+  display: flex; /* Affichage en flexbox */
+  align-items: center; /* Alignement centré verticalement */
+  justify-content: center; /* Alignement centré horizontalement */
 }
 
+/* Bouton d'envoi au survol */
 button:hover {
-  background: var(--jaune);
-  color: var(--texte);
-  transform: scale(1.05);
+  background: var(--jaune); /* Fond jaune */
+  color: var(--texte); /* Texte noir */
+  transform: scale(1.05); /* Légère augmentation de taille */
 }
 
-/* Typing indicator */
+/* Indicateur de saisie */
 .typing-indicator {
-  display: flex;
-  align-items: center;
-  padding: 10px 0;
+  display: flex; /* Affichage en flexbox */
+  align-items: center; /* Alignement centré verticalement */
+  padding: 10px 0; /* Espacement vertical */
 }
 
+/* Points de l'indicateur de saisie */
 .typing-indicator span {
-  height: 8px;
-  width: 8px;
-  background: #999;
-  border-radius: 50%;
-  margin: 0 2px;
-  animation: typing 1s infinite;
+  height: 8px; /* Hauteur */
+  width: 8px; /* Largeur */
+  background: #999; /* Couleur grise */
+  border-radius: 50%; /* Forme circulaire */
+  margin: 0 2px; /* Marges horizontales */
+  animation: typing 1s infinite; /* Animation de rebond */
 }
 
+/* Délai pour le deuxième point */
 .typing-indicator span:nth-child(2) {
-  animation-delay: 0.2s;
+  animation-delay: 0.2s; /* Délai de 0.2s */
 }
 
+/* Délai pour le troisième point */
 .typing-indicator span:nth-child(3) {
-  animation-delay: 0.4s;
+  animation-delay: 0.4s; /* Délai de 0.4s */
 }
 
+/* Animation des points */
 @keyframes typing {
-  0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(-5px); }
+  0%, 100% { transform: translateY(0); } /* Position normale */
+  50% { transform: translateY(-5px); } /* Déplacement vers le haut */
 }
 
-/* Source links styling */
+/* Style des liens sources */
 .sources {
-  margin-top: 10px;
-  padding-top: 10px;
-  border-top: 1px solid var(--border-color);
-  font-size: 0.85rem;
+  margin-top: 10px; /* Marge en haut */
+  padding-top: 10px; /* Espacement interne en haut */
+  border-top: 1px solid var(--border-color); /* Bordure supérieure */
+  font-size: 0.85rem; /* Taille du texte */
 }
 
+/* Liens sources en mode sombre */
 body.dark-mode .sources {
-  border-color: var(--border-color-dark);
+  border-color: var(--border-color-dark); /* Bordure sombre */
 }
 
+/* Texte en gras des sources */
 .sources strong {
-  color: var(--texte);
+  color: var(--texte); /* Couleur du texte */
 }
 
+/* Texte en gras des sources en mode sombre */
 body.dark-mode .sources strong {
-  color: var(--texte-sombre);
+  color: var(--texte-sombre); /* Couleur du texte clair */
 }
 
+/* Liens des sources */
 .sources a {
-  color: var(--vert);
-  text-decoration: none;
+  color: var(--vert); /* Couleur verte */
+  text-decoration: none; /* Pas de soulignement */
 }
 
+/* Liens des sources au survol */
 .sources a:hover {
-  text-decoration: underline;
+  text-decoration: underline; /* Soulignement */
 }
 
-/* Feedback buttons */
+/* Boutons de feedback */
 .feedback {
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-  margin-top: 10px;
-  padding-top: 10px;
-  border-top: 1px solid var(--border-color);
-  font-size: 0.85rem;
+  display: flex; /* Affichage en flexbox */
+  align-items: center; /* Alignement centré verticalement */
+  gap: 0.5rem; /* Espacement entre éléments */
+  margin-top: 10px; /* Marge en haut */
+  padding-top: 10px; /* Espacement interne en haut */
+  border-top: 1px solid var(--border-color); /* Bordure supérieure */
+  font-size: 0.85rem; /* Taille du texte */
 }
 
+/* Boutons de feedback en mode sombre */
 body.dark-mode .feedback {
-  border-color: var(--border-color-dark);
+  border-color: var(--border-color-dark); /* Bordure sombre */
 }
 
+/* Style des boutons de feedback */
 .feedback-btn {
-  background: none;
-  border: 1px solid var(--border-color);
-  border-radius: 50%;
-  width: 30px;
-  height: 30px;
-  cursor: pointer;
-  transition: all 0.3s;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  background: none; /* Pas de fond */
+  border: 1px solid var(--border-color); /* Bordure */
+  border-radius: 50%; /* Forme circulaire */
+  width: 30px; /* Largeur */
+  height: 30px; /* Hauteur */
+  cursor: pointer; /* Curseur en pointeur */
+  transition: all 0.3s; /* Transition douce */
+  display: flex; /* Affichage en flexbox */
+  align-items: center; /* Alignement centré verticalement */
+  justify-content: center; /* Alignement centré horizontalement */
 }
 
+/* Boutons de feedback en mode sombre */
 body.dark-mode .feedback-btn {
-  border-color: var(--border-color-dark);
-  color: var(--texte-sombre);
+  border-color: var(--border-color-dark); /* Bordure sombre */
+  color: var(--texte-sombre); /* Texte clair */
 }
 
+/* Boutons de feedback au survol */
 .feedback-btn:hover {
-  background: var(--vert);
-  color: white;
-  border-color: var(--vert);
+  background: var(--vert); /* Fond vert */
+  color: white; /* Texte blanc */
+  border-color: var(--vert); /* Bordure verte */
 }
 
+/* Styles pour les appareils mobiles */
 @media (max-width: 600px) {
-  header, .input-area { padding: 0.8rem 1rem; }
-  .logo { font-size: 1.2rem; }
-  .suggestion-card { min-width: 160px; font-size: 0.82rem; padding: 0.7rem 1rem; }
-  .message { max-width: 90%; font-size: 0.9rem; }
-  .chat-container { padding: 1rem 0.5rem; }
-  .flag-bf { width: 32px; height: 21px; }
-  .flag-bf::before { font-size: 12px; }
-  .header-controls { gap: 0.5rem; }
-  .welcome-message, .bot { padding: 0.9rem; }
-  .avatar { width: 30px; height: 30px; }
-  .avatar i { font-size: 16px; }
-  .message-text { font-size: 0.9rem; }
+  header, .input-area { padding: 0.8rem 1rem; } /* Réduction des espacements */
+  .logo { font-size: 1.2rem; } /* Réduction de la taille du logo */
+  .suggestion-card { min-width: 160px; font-size: 0.82rem; padding: 0.7rem 1rem; } /* Adaptation des cartes */
+  .message { max-width: 90%; font-size: 0.9rem; } /* Adaptation des messages */
+  .chat-container { padding: 1rem 0.5rem; } /* Réduction des espacements */
+  .flag-bf { width: 32px; height: 21px; } /* Réduction du drapeau */
+  .flag-bf::before { font-size: 12px; } /* Réduction de l'étoile */
+  .header-controls { gap: 0.5rem; } /* Réduction des espacements */
+  .welcome-message, .bot { padding: 0.9rem; } /* Réduction des espacements */
+  .avatar { width: 30px; height: 30px; } /* Réduction de l'avatar */
+  .avatar i { font-size: 16px; } /* Réduction de l'icône */
+  .message-text { font-size: 0.9rem; } /* Réduction de la taille du texte */
 }
